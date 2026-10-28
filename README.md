@@ -13,12 +13,11 @@ El post está en `index.html` y se publica con GitHub Pages.
 | `index.html` | El post, con gráficos interactivos (Plotly) |
 | `datos/comparacion.csv` | `d1`, `d2` y bloque B-Call junto a W-NOMINATE, el modelo bayesiano y el dinámico de Fábrega, más las rupturas con el propio bloque, por diputado y período (803 filas) |
 | `datos/resumen_periodos.csv` | Una fila por período con votaciones de cada base, votos que coinciden, correlaciones y medianas de rupturas |
-| `datos/simulacion.csv` | Percentil medio de `d2` por tipo de diputado en la simulación, por escenario |
 | `datos/datos.js` | Los datos que lee la página |
+| `datos/votos_*.json` | Votación por votación, uno por período, con las votaciones en que cada diputado se apartó de su bloque |
 | `R/01_comparar.R` | Cruza las dos bases y calcula las rupturas con el propio bloque |
-| `R/02_simulacion.R` | Simula voto espacial en una dimensión para ver si `d2` sube en el centro por construcción |
-| `R/03_gutierrez.R` | El caso de Hugo Gutiérrez en 2010-2014, votación por votación (`datos/gutierrez.csv` y `datos/gutierrez_diputados.csv`) |
-| `R/04_pagina.R` | Arma `datos/datos.js` |
+| `R/02_votos.R` | Arma los votos de cada período para la Figura 3 (`datos/votos_*.json`) |
+| `R/03_pagina.R` | Arma `datos/datos.js` |
 
 ## Datos y decisiones
 
