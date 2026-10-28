@@ -17,7 +17,8 @@ El post está en `index.html` y se publica con GitHub Pages.
 | `datos/datos.js` | Los datos que lee la página |
 | `R/01_comparar.R` | Cruza las dos bases y calcula las rupturas con el propio bloque |
 | `R/02_simulacion.R` | Simula voto espacial en una dimensión para ver si `d2` sube en el centro por construcción |
-| `R/03_pagina.R` | Arma `datos/datos.js` |
+| `R/03_gutierrez.R` | El caso de Hugo Gutiérrez en 2010-2014, votación por votación (`datos/gutierrez.csv` y `datos/gutierrez_diputados.csv`) |
+| `R/04_pagina.R` | Arma `datos/datos.js` |
 
 ## Datos y decisiones
 

@@ -89,6 +89,10 @@ figure { margin: 32px auto 36px; }
 figcaption { font-family: var(--sans); font-size: 14px; line-height: 1.5; color: var(--ink-2); margin: 10px 4px 0; max-width: 680px; }
 figcaption b { color: var(--ink); }
 
+.selector { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 8px 0; font-family: var(--sans); }
+.selector button { font: inherit; font-size: 13px; color: var(--ink-2); background: transparent; border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+.selector button[aria-pressed="true"] { color: var(--page); background: var(--ink); border-color: var(--ink); }
+.cifra { font-family: var(--sans); font-size: 14px; line-height: 1.5; color: var(--ink-2); margin: 4px 10px 10px; }
 .tabla-envoltura { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 14px; }
 th, td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--grid); font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -198,7 +202,25 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
 </figure>
 
 <div class="col">
-  <p>Hugo Gutiérrez es el caso más claro. En 2010-2014 se apartó de su bloque en el 20,5% de las votaciones, y en el 98% de esos casos la izquierda y la derecha estaban de acuerdo. W-NOMINATE lo deja en −1, el tope de su escala, y <span class="var">d1</span> también lo empuja hacia afuera. Lo que solo <span class="var">d2</span> registra es que ese borde se arma votando contra acuerdos de toda la sala. En 2014-2018 la correlación de la Tabla 2 incluso se invierte (0,20), porque cuatro de los cinco diputados con <span class="var">d2</span> más alto estaban del lado izquierdo, entre −0,79 y −0,97 en W-NOMINATE. Boric era uno de ellos. Es la Cámara de <a href="https://alcatruz.github.io/boric-kast-camara/">Los dos extremos</a>.</p>
+  <h2>Hugo Gutiérrez, votación por votación</h2>
+  <p>Hugo Gutiérrez, del PC, es el caso más claro. En 2010-2014 se apartó de su bloque en el 20,5% de las votaciones, y en el 98% de esos casos la izquierda y la derecha estaban de acuerdo. W-NOMINATE lo deja en −1, el tope de su escala, y <span class="var">d1</span> también lo empuja hacia afuera. Lo que solo <span class="var">d2</span> registra es que ese borde se arma votando contra acuerdos de toda la sala.</p>
+
+  <p>La Figura 3 lo muestra. Cada punto es una de las 3.088 votaciones de proyectos de ley de ese período en que los dos bloques tuvieron una mayoría definida, ubicada según el porcentaje de cada bloque que votó a favor. Arriba a la derecha quedan los acuerdos a favor y abajo a la izquierda los acuerdos en contra. De las 1.272 votaciones con acuerdo en que votó, Gutiérrez se apartó en 456, casi siempre votando en contra (277) o absteniéndose (171). De ellas, 94 fueron votaciones de las leyes de presupuestos de 2011 a 2014. Entre las demás están la ley de lobby, el proyecto sobre sustentabilidad de los recursos hidrobiológicos y acceso a la pesca, y el registro de condenados por delitos sexuales contra menores.</p>
+</div>
+
+<figure class="ancho">
+  <div class="grafico">
+    <div class="selector" id="sel-gut" role="group" aria-label="Diputado que se muestra"></div>
+    <div id="fig-gutierrez" class="lienzo" role="img" aria-label="Votaciones de 2010-2014 según el porcentaje a favor en cada bloque, con las rupturas del diputado elegido"></div>
+    <p class="cifra" id="cifra-gut"></p>
+  </div>
+  <figcaption><b>Figura 3.</b> Votaciones de proyectos de ley de 2010-2014 según el porcentaje a favor en el bloque de izquierda (eje horizontal) y en el de derecha (eje vertical), entre quienes votaron a favor o en contra. En color, las votaciones en que el diputado elegido se apartó de la mayoría de su bloque. Los puntos llevan un pequeño desplazamiento al azar para que no se tapen. Al pasar el cursor aparece el proyecto.</figcaption>
+</figure>
+
+<div class="col">
+  <p>No era una conducta solo suya. Los tres diputados del PC hacen lo mismo con distinta intensidad. Gutiérrez se apartó en el 36% de las votaciones con acuerdo en que votó, Lautaro Carmona en el 26% y Guillermo Teillier en el 20%. Alfonso De Urresti, del PS, el diputado de la izquierda con el <span class="var">d2</span> más cercano a la mediana de su bloque, lo hizo en el 13%. En la figura se puede cambiar de diputado.</p>
+
+  <p>En 2014-2018 la correlación de la Tabla 2 incluso se invierte (0,20), porque cuatro de los cinco diputados con <span class="var">d2</span> más alto estaban del lado izquierdo, entre −0,79 y −0,97 en W-NOMINATE. Boric era uno de ellos. Es la Cámara de <a href="https://alcatruz.github.io/boric-kast-camara/">Los dos extremos</a>.</p>
 
   <h2>Lo que dice y lo que no</h2>
   <p>Dos métodos distintos, con bases armadas por separado, dibujan la misma sala. En la posición, B-Call no agrega nada a lo que ya está publicado. Y eso es una buena noticia, porque la ubicación de los diputados chilenos no depende del método con que se estime.</p>
@@ -216,6 +238,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
     <li>Pablo Prieto figura en la base de Fábrega con el identificador 209 también en 2018-2022, donde la Cámara usa el 1064. Lo recodifiqué para incluirlo.</li>
     <li>La simulación está en <code>R/02_simulacion.R</code>. Son 155 diputados en una dimensión, 65 por bloque con posiciones normales centradas en −0,6 y 0,6, y 15 moderados y 10 erráticos con posiciones uniformes entre −0,25 y 0,25. Votan según un modelo probit con poco error (β = 8) o, los erráticos, con mucho (β = 1), en 1.500 votaciones. Los puntos de corte se concentran entre los bloques, se reparten por todo el eje o mezclan las dos cosas por mitades. Son 20 repeticiones por escenario, estimadas con <code>bcall_auto()</code> igual que en el análisis por período. Con la mezcla, los moderados coherentes quedan en el percentil 88 y la correlación entre los coherentes es −0,43.</li>
     <li>El lado de un bloque en una votación es la opción, a favor o en contra, que eligió la mayoría de sus miembros. Si empatan, la votación no cuenta. Apartarse del bloque incluye abstenerse.</li>
+    <li>En la Figura 3 el diputado de comparación es el de la izquierda, del PS o el PPD, con el <span class="var">d2</span> más cercano a la mediana de su bloque en 2010-2014. Los títulos de los proyectos vienen de tramitacion.senado.cl.</li>
     <li>Una primera versión de este texto, del 27 de octubre de 2026, leía la correlación entre <span class="var">d2</span> y la cercanía al centro como apoyo al argumento de B-Call. La simulación muestra que esa correlación puede aparecer por construcción, y corregí el texto el 28 de octubre.</li>
     <li>El código y los datos están en el <a href="https://github.com/Alcatruz/bcall-wnominate-camara">repositorio</a>. Los archivos que contienen estimaciones de Fábrega (<code>datos/comparacion.csv</code> y <code>datos/datos.js</code>) se distribuyen con su misma licencia, CC BY-NC-SA 4.0.</li>
   </ul>
@@ -348,8 +371,84 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
     Plotly.react(id, data, layout, CONFIG);
   }
 
+  // Figura 3, caso Gutiérrez ------------------------------------------------
+  var G = D.gut, elegido = G.dips[0].id;
+  // desplazamiento fijo por votación para que los puntos no se tapen
+  var jit = G.vot.map(function (v, i) {
+    var s = Math.sin(i * 12.9898) * 43758.5453, r = Math.sin(i * 78.233) * 12345.678;
+    return [(s - Math.floor(s) - 0.5) * 3, (r - Math.floor(r) - 0.5) * 3];
+  });
+  function selector() {
+    document.getElementById("sel-gut").innerHTML = G.dips.map(function (d) {
+      return '<button type="button" data-id="' + d.id + '" aria-pressed="' + (d.id === elegido) + '">' + d.ap + " (" + d.pa + ")</button>";
+    }).join("");
+  }
+  document.getElementById("sel-gut").addEventListener("click", function (e) {
+    var b = e.target.closest("button");
+    if (!b) return;
+    elegido = b.getAttribute("data-id");
+    selector();
+    figGut(tok());
+  });
+  selector();
+
+  function figGut(T) {
+    var dip = G.dips.filter(function (d) { return d.id === elegido; })[0], votos = G.votos[elegido];
+    function hover(i) {
+      var v = G.vot[i];
+      return [v.b ? v.b : "", (G.tit[v.b] || "").replace(/</g, "&lt;"), v.f, num(v.x, 0) + "%", num(v.y, 0) + "%"];
+    }
+    var HT = "<b>%{customdata[1]}</b><br>Boletín %{customdata[0]} · %{customdata[2]}<br>A favor, izquierda %{customdata[3]} · derecha %{customdata[4]}<extra></extra>";
+    var todas = G.vot.map(function (v, i) { return i; });
+    var data = [{
+      type: "scatter", mode: "markers", name: "Todas las votaciones", hoverinfo: "skip",
+      x: todas.map(function (i) { return G.vot[i].x + jit[i][0]; }), y: todas.map(function (i) { return G.vot[i].y + jit[i][1]; }),
+      marker: { size: 4, color: T.neutro, opacity: 0.45 }
+    }];
+    [[-1, "Votó en contra", T.izq, "circle"], [0, "Se abstuvo", T.ink, "circle-open"], [1, "Votó a favor", T.der, "circle"]].forEach(function (t) {
+      var idx = todas.filter(function (i) { return votos[i] !== null && votos[i] !== G.vot[i].l && votos[i] === t[0]; });
+      if (!idx.length) return;
+      data.push({
+        type: "scatter", mode: "markers", name: t[1],
+        x: idx.map(function (i) { return G.vot[i].x + jit[i][0]; }), y: idx.map(function (i) { return G.vot[i].y + jit[i][1]; }),
+        customdata: idx.map(hover), hovertemplate: HT,
+        marker: { size: 7, color: t[2], symbol: t[3], line: { color: t[3] === "circle-open" ? t[2] : T.surface, width: t[3] === "circle-open" ? 1.5 : 0.5 } }
+      });
+    });
+    var angosto = ancho("fig-gutierrez") < 560;
+    var tf = { color: T.muted, size: angosto ? 10 : 11 };
+    var layout = {
+      paper_bgcolor: T.surface, plot_bgcolor: T.surface, separators: ",.",
+      font: { family: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif', size: 11, color: T.ink2 },
+      height: angosto ? 480 : 540, margin: { l: 56, r: 16, t: 40, b: 52 }, dragmode: false,
+      hoverlabel: { bgcolor: T.surface, bordercolor: T.axis, font: { color: T.ink, size: 13 } },
+      legend: { orientation: "h", x: 0, xanchor: "left", y: 1.02, yanchor: "bottom", font: { color: T.ink2, size: 12 } },
+      xaxis: { range: [-4, 104], dtick: 25, ticksuffix: "%", gridcolor: T.grid, linecolor: T.axis, zeroline: false, fixedrange: true,
+               tickfont: { color: T.muted }, title: { text: "A favor en el bloque de izquierda", font: { color: T.ink2, size: 12 } } },
+      yaxis: { range: [-4, 104], dtick: 25, ticksuffix: "%", gridcolor: T.grid, linecolor: T.axis, zeroline: false, fixedrange: true,
+               tickfont: { color: T.muted }, title: { text: "A favor en el bloque de derecha", font: { color: T.ink2, size: 12 } } },
+      shapes: [
+        { type: "rect", xref: "x", yref: "y", x0: 50, x1: 104, y0: 50, y1: 104, fillcolor: T.grid, opacity: 0.5, line: { width: 0 }, layer: "below" },
+        { type: "rect", xref: "x", yref: "y", x0: -4, x1: 50, y0: -4, y1: 50, fillcolor: T.grid, opacity: 0.5, line: { width: 0 }, layer: "below" },
+        { type: "line", xref: "x", yref: "y", x0: 50, x1: 50, y0: -4, y1: 104, line: { color: T.axis, width: 1, dash: "dot" } },
+        { type: "line", xref: "x", yref: "y", x0: -4, x1: 104, y0: 50, y1: 50, line: { color: T.axis, width: 1, dash: "dot" } }
+      ],
+      annotations: [
+        { text: "Los dos bloques a favor", x: 98, y: 58, xanchor: "right", showarrow: false, font: tf },
+        { text: "Los dos bloques en contra", x: 2, y: 42, xanchor: "left", showarrow: false, font: tf },
+        { text: "Solo la derecha a favor", x: 2, y: 58, xanchor: "left", showarrow: false, font: tf },
+        { text: "Solo la izquierda a favor", x: 98, y: 42, xanchor: "right", showarrow: false, font: tf }
+      ]
+    };
+    Plotly.react("fig-gutierrez", data, layout, CONFIG);
+    document.getElementById("cifra-gut").innerHTML = "<b>" + dip.n + "</b> (" + dip.pa + ", <span class=\"var\">d2</span> " + num(dip.d2, 2) +
+      ") se apartó de su bloque en " + ent(dip.aparta) + " votaciones. De ellas, " + ent(dip.acuerdos) +
+      " fueron votaciones con acuerdo de los dos bloques, el " + num(100 * dip.acuerdos / dip.votados, 0) + "% de las " + ent(dip.votados) + " de ese tipo en que votó.";
+  }
+
   function todo() {
     var T = tok();
+    figGut(T);
     paneles("fig-posicion", T, { x: "w", y: "d1", xt: "W-NOMINATE", yt: "d1", xr: [-1.1, 1.1], xd: 0.5, yr: [-1.5, 1.3], yd: 0.5 });
     paneles("fig-dispersion", T, { x: "w", y: "d2", xt: "W-NOMINATE", yt: "d2", xr: [-1.1, 1.1], xd: 0.5, yr: [0.2, 2.35], yd: 0.5, marcar: true });
   }
