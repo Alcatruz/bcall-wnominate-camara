@@ -2,7 +2,7 @@
 
 B-Call comparado con las estimaciones ideológicas de Fábrega (2025) para la Cámara de Diputados de Chile, 2002-2026.
 
-**📖 [Leer el análisis →](https://alcatruz.github.io/bcall-wnominate-camara/)**
+* [Leer el análisis →](https://alcatruz.github.io/bcall-wnominate-camara/)**
 
 El post está en `index.html` y se publica con GitHub Pages.
 
