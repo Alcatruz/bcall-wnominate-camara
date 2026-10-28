@@ -128,16 +128,16 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
 <div class="col">
   <p>En 2025 Jorge Fábrega publicó en <i>Data in Brief</i> una base con la posición ideológica de los diputados chilenos entre 2002 y 2026 (Fábrega, 2025a). Para cada diputado y período trae tres estimaciones, y junto a ellas las matrices de votación con que se hicieron y el código para replicarlas (Fábrega, 2025b). Que todo esté abierto permite poner dos mediciones de la misma Cámara una al lado de la otra.</p>
 
-  <p>La otra medición es B-Call, que separa dos cosas, la posición de un diputado, <span class="var">d1</span>, y la dispersión de sus votos alrededor de ella, <span class="var">d2</span> (Toro-Maureira et al., 2025). Hace unos días publiqué sus <a href="https://alcatruz.github.io/bcall-camara-2002-2026/">estimaciones por período legislativo</a>. Si las dos bases parten de las mismas votaciones y ordenan a los diputados de la misma manera, la posición está bien resuelta y lo que B-Call agrega hay que buscarlo en <span class="var">d2</span>. Eso es lo que reviso acá.</p>
+  <p>La otra medición es B-Call, que separa dos cosas, la posición de un diputado, <span class="var">d1</span>, y la dispersión de sus votos alrededor de ella, <span class="var">d2</span> (Toro-Maureira et al., 2025). Hace unos días publiqué sus <a href="https://alcatruz.github.io/bcall-camara-2002-2026/">estimaciones por período legislativo</a>. ¿Llegan las dos al mismo lugar? Si lo hacen, la posición de los diputados está bien resuelta y lo que B-Call agrega hay que buscarlo en <span class="var">d2</span>.</p>
 
   <div class="recuadro">
     <p><b>Cómo se compara.</b> De las tres estimaciones de Fábrega, dos se hacen por separado en cada período, W-NOMINATE y un modelo bayesiano de puntos ideales. La tercera es un modelo dinámico que pone los seis períodos en una escala común. Comparo cada una con <span class="var">d1</span> diputado por diputado dentro de cada período, con el identificador de la Cámara. Ninguna correlación mezcla períodos.</p>
   </div>
 
   <h2>Las mismas votaciones</h2>
-  <p>Antes de mirar las estimaciones conviene mirar los datos. Las dos bases se armaron por separado a partir de los registros de la Cámara. Las 17.202 votaciones de la base de Fábrega están todas en la nuestra, y en ellas coinciden uno a uno los 1.861.669 votos emitidos (Tabla 1). No hay un voto distinto ni uno que esté en una base y falte en la otra.</p>
+  <p>Antes de mirar las estimaciones conviene mirar los datos. Las dos bases se armaron por separado a partir de los registros de la Cámara. Las 17.202 votaciones de la base de Fábrega están todas en la de B-Call, y en ellas coinciden uno a uno los 1.861.669 votos emitidos (Tabla 1). No hay un voto distinto ni uno que esté en una base y falte en la otra.</p>
 
-  <p>Las diferencias son de cobertura. La base de Fábrega termina el 2 de junio de 2025 y la de B-Call sigue hasta el fin del período, en marzo de 2026, con 733 votaciones más. Hay también 99 votaciones de proyectos de ley anteriores a esa fecha que solo están en la nuestra. En diputados, las dos bases comparten 803 casos de diputado y período. Fábrega estima además a cinco diputados que votaron en el 10% o menos de las votaciones de su período, el umbral bajo el cual B-Call no estima.</p>
+  <p>Las diferencias son de cobertura. La base de Fábrega termina el 2 de junio de 2025 y la de B-Call sigue hasta el fin del período, en marzo de 2026, con 733 votaciones más. Hay también 99 votaciones de proyectos de ley anteriores a esa fecha que solo están en la de B-Call. En diputados, las dos bases comparten 803 casos de diputado y período. Fábrega estima además a 5 diputados que votaron en el 10% o menos de las votaciones de su período, el umbral bajo el cual B-Call no estima.</p>
 </div>
 
 <figure class="ancho">
@@ -160,7 +160,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
 <div class="col">
   <p>Con el modelo dinámico la correlación baja a valores entre 0,902 y 0,953. Es esperable, porque ese modelo no estima cada período por su cuenta y a quienes votan poco los deja cerca de cero. Néstor Jofré, con 163 votos en 2002-2006, tiene 0,55 en W-NOMINATE y −0,09 en el modelo dinámico.</p>
 
-  <p>Lo que queda de diferencia está en los bordes. W-NOMINATE mantiene a cada diputado entre −1 y 1, y en cada período entre dos y cuatro diputados quedan pegados a ese límite. <span class="var">d1</span> no tiene ese techo. Por eso Hugo Gutiérrez queda en −1,37 con B-Call y en −1 con W-NOMINATE en 2010-2014, y en 2022-2026 los diputados del Partido Nacional Libertario aparecen, en relación con el resto de la sala, más a la derecha con <span class="var">d1</span> que con W-NOMINATE.</p>
+  <p>Lo que queda de diferencia está en los bordes. W-NOMINATE mantiene a cada diputado entre −1 y 1, y en cada período entre 2 y 4 diputados quedan pegados a ese límite. <span class="var">d1</span> no tiene ese techo. Por eso Hugo Gutiérrez queda en −1,37 con B-Call y en −1 con W-NOMINATE en 2010-2014. Y en 2022-2026 los diputados del Partido Nacional Libertario aparecen, en relación con el resto de la sala, más a la derecha con <span class="var">d1</span> que con W-NOMINATE.</p>
 
   <p>Hay un caso que interesa más. En 2014-2018 W-NOMINATE ubica a Pedro Browne, Karla Rubilar y Joaquín Godoy en el centro de la sala, entre −0,09 y 0,07. Los tres habían sido diputados de RN en el período anterior y en este la Cámara los registra en Amplitud o como independientes. B-Call los deja en el bloque de derecha, con <span class="var">d1</span> entre 0,28 y 0,43, pero con votos mucho más dispersos que los del resto del bloque. Su <span class="var">d2</span> va de 1,06 a 1,55, cuando la mediana de la derecha en ese período es 0,81. Es el problema que motivó B-Call. Un modelo de una dimensión lee como moderado a quien vota unas veces con un bloque y otras con el otro. Al separar posición y dispersión, lo que aparece son tres diputados que seguían en la derecha sin votar con ella de forma pareja.</p>
 
@@ -176,7 +176,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
 <div class="col">
   <p>La excepción de 2014-2018 tiene que ver con quiénes eran los dispersos. De los cinco diputados con <span class="var">d2</span> más alto, cuatro estaban del lado izquierdo de la sala. Gabriel Boric, Gaspar Rivas, Giorgio Jackson y Vlado Mirosevic quedan en W-NOMINATE entre −0,79 y −0,97. Es la Cámara de <a href="https://alcatruz.github.io/boric-kast-camara/">Los dos extremos</a>, donde los polos eran también los que menos votaban con su bloque.</p>
 
-  <p>En unas Cámaras los diputados que votan disperso están en el centro y en otras en los bordes. La dispersión no se puede deducir de la posición, y por eso vale la pena medirla aparte.</p>
+  <p>En unas Cámaras los diputados que votan disperso están en el centro y en otras en los bordes. La dispersión no se deduce de la posición. Hay que medirla aparte.</p>
 </div>
 
 <figure class="ancho">
@@ -188,14 +188,14 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
 
 <div class="col">
   <h2>Lo que dice y lo que no</h2>
-  <p>Dos métodos distintos, aplicados a bases armadas por separado, ubican a los diputados en el mismo lugar. En la posición, B-Call no agrega nada a lo que ya está publicado, y eso es una buena noticia, porque quiere decir que el orden de los diputados chilenos de izquierda a derecha no depende del método con que se estime. Lo propio de B-Call está en <span class="var">d2</span>, y la comparación muestra que <span class="var">d2</span> trae información que la posición sola no entrega.</p>
+  <p>Dos métodos distintos, con bases armadas por separado, dibujan la misma sala. En la posición, B-Call no agrega nada a lo que ya está publicado. Y eso es una buena noticia, porque la ubicación de los diputados chilenos no depende del método con que se estime. Lo propio de B-Call está en <span class="var">d2</span>, y la comparación muestra que <span class="var">d2</span> trae información que la posición sola no entrega.</p>
 
-  <p>La comparación no dice cuál de los métodos mide mejor la ideología. Los dos usan las mismas votaciones, así que su acuerdo muestra que el resultado resiste un cambio de modelo, pero no que ese resultado sea la ideología de cada diputado. Tampoco dice nada sobre cambios entre períodos, porque todas las correlaciones son dentro de un mismo período.</p>
+  <p>La comparación no dice cuál de los métodos mide mejor la ideología. Los dos usan las mismas votaciones, así que su acuerdo muestra que el resultado resiste un cambio de modelo. Si ese resultado es la ideología de cada diputado es otra pregunta. Tampoco dice nada sobre cambios entre períodos, porque todas las correlaciones son dentro de un mismo período.</p>
 
   <h3>Datos, código y decisiones</h3>
   <ul class="notas">
     <li>La base de Fábrega se bajó de Harvard Dataverse (versión 2.0) el 27 de octubre de 2026. Uso las columnas <code>wnom_ideology</code>, <code>bay_ideology</code> y <code>dim_ideology</code> de su archivo en formato largo y las seis matrices de votación.</li>
-    <li>El artículo presenta la primera estimación como DW-NOMINATE. En el script de replicación (<code>A_Ideology_Estimation.R</code>) se estima con W-NOMINATE, por separado en cada período y en una dimensión, y así la llamo aquí.</li>
+    <li>El artículo presenta la primera estimación como DW-NOMINATE. En el script de replicación (<code>A_Ideology_Estimation.R</code>) se estima con W-NOMINATE, por separado en cada período y en una dimensión, y así la llamo acá.</li>
     <li>Las estimaciones de B-Call son las del <a href="https://alcatruz.github.io/bcall-camara-2002-2026/">análisis anterior</a>, sobre las votaciones de proyectos de ley con número de boletín de opendata.camara.cl. A favor 1, en contra −1, abstención 0. Pareos, dispensas y ausencias quedan como dato faltante.</li>
     <li>Para comparar votos, Afirmativo, En Contra y Abstención de las matrices de Fábrega se cruzan con a favor, en contra y abstención. Dispensado, No Vota y las celdas vacías cuentan como sin voto. Los 1.861.669 votos son las celdas de diputado y votación con voto en las dos bases.</li>
     <li>Pablo Prieto figura en la base de Fábrega con el identificador 209 también en 2018-2022, donde la Cámara usa el 1064. Lo recodifiqué para incluirlo.</li>
