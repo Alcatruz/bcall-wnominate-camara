@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Medir dos veces</title>
+<meta name="description" content="B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Donde se separan es en la dispersión del voto.">
+<meta name="author" content="Daniel Alcatruz">
+<meta property="og:title" content="Medir dos veces">
+<meta property="og:description" content="B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Donde se separan es en la dispersión del voto.">
+<meta property="og:type" content="article">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.10);
+  --izq: #e34948;
+  --der: #2a78d6;
+  --neutro: #b5b3ab;
+  --link: #1c5cab;
+  --serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #f0efec;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --izq: #e66767;
+    --der: #3987e5;
+    --neutro: #5d5c57;
+    --link: #86b6ef;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --ink: #f0efec;
+  --ink-2: #c3c2b7;
+  --muted: #898781;
+  --grid: #2c2c2a;
+  --axis: #383835;
+  --border: rgba(255, 255, 255, 0.10);
+  --izq: #e66767;
+  --der: #3987e5;
+  --neutro: #5d5c57;
+  --link: #86b6ef;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--page); color: var(--ink); font-family: var(--serif); font-size: 19px; line-height: 1.6; }
+main { padding: 0 16px 64px; }
+.col { max-width: 680px; margin: 0 auto; }
+.ancho { max-width: 920px; margin: 0 auto; }
+
+header.cabecera { padding: 56px 0 8px; }
+.antetitulo { font-family: var(--sans); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+h1 { font-family: var(--sans); font-weight: 700; font-size: clamp(36px, 7vw, 52px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 16px; text-wrap: balance; }
+.bajada { font-size: 21px; line-height: 1.45; color: var(--ink-2); margin: 0 0 20px; text-wrap: pretty; }
+.firma { font-family: var(--sans); font-size: 14px; color: var(--muted); margin: 0; }
+.firma a { color: var(--ink-2); }
+h2 { font-family: var(--sans); font-size: 24px; line-height: 1.25; font-weight: 700; margin: 56px 0 12px; letter-spacing: -0.005em; }
+h3 { font-family: var(--sans); font-size: 17px; font-weight: 700; margin: 32px 0 8px; }
+p { margin: 0 0 18px; text-wrap: pretty; }
+a { color: var(--link); text-underline-offset: 2px; }
+.var { font-family: var(--sans); font-weight: 600; font-size: 0.92em; }
+code { font-size: 0.88em; }
+
+.recuadro { border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 18px 22px; margin: 28px 0; font-size: 17px; line-height: 1.55; }
+.recuadro p:last-child { margin-bottom: 0; }
+
+figure { margin: 32px auto 36px; }
+.grafico { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 8px 4px; overflow: hidden; }
+.lienzo { width: 100%; }
+figcaption { font-family: var(--sans); font-size: 14px; line-height: 1.5; color: var(--ink-2); margin: 10px 4px 0; max-width: 680px; }
+figcaption b { color: var(--ink); }
+
+.tabla-envoltura { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 14px; }
+th, td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--grid); font-variant-numeric: tabular-nums; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { color: var(--muted); font-weight: 600; font-size: 12.5px; white-space: normal; vertical-align: bottom; }
+tr:last-child td { border-bottom: 0; }
+
+ul.notas { padding-left: 20px; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
+ul.notas li { margin-bottom: 8px; }
+.ref { font-size: 16px; line-height: 1.55; color: var(--ink-2); padding-left: 2em; text-indent: -2em; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 48px 0 0; }
+footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding: 20px 0 0; }
+
+@media (max-width: 600px) {
+  body { font-size: 17.5px; }
+  header.cabecera { padding-top: 36px; }
+  .bajada { font-size: 19px; }
+  h2 { font-size: 21px; margin-top: 44px; }
+  .grafico { padding: 8px 2px 2px; border-radius: 8px; }
+  .recuadro { padding: 14px 16px; }
+  table { font-size: 12.5px; }
+  th, td { padding: 7px 6px; }
+}
+</style>
+</head>
+<body>
+<main>
+
+<header class="cabecera col">
+  <p class="antetitulo">Comportamiento legislativo · Chile</p>
+  <h1>Medir dos veces</h1>
+  <p class="bajada">B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Donde se separan es en la dispersión del voto.</p>
+  <p class="firma"><a href="https://github.com/Alcatruz">Daniel Alcatruz</a> · 27 de octubre de 2026</p>
+</header>
+
+<article>
+<div class="col">
+  <p>En 2025 Jorge Fábrega publicó en <i>Data in Brief</i> una base con la posición ideológica de los diputados chilenos entre 2002 y 2026 (Fábrega, 2025a). Para cada diputado y período trae tres estimaciones, y junto a ellas las matrices de votación con que se hicieron y el código para replicarlas (Fábrega, 2025b). Que todo esté abierto permite poner dos mediciones de la misma Cámara una al lado de la otra.</p>
+
+  <p>La otra medición es B-Call, que separa dos cosas, la posición de un diputado, <span class="var">d1</span>, y la dispersión de sus votos alrededor de ella, <span class="var">d2</span> (Toro-Maureira et al., 2025). Hace unos días publiqué sus <a href="https://alcatruz.github.io/bcall-camara-2002-2026/">estimaciones por período legislativo</a>. Si las dos bases parten de las mismas votaciones y ordenan a los diputados de la misma manera, la posición está bien resuelta y lo que B-Call agrega hay que buscarlo en <span class="var">d2</span>. Eso es lo que reviso acá.</p>
+
+  <div class="recuadro">
+    <p><b>Cómo se compara.</b> De las tres estimaciones de Fábrega, dos se hacen por separado en cada período, W-NOMINATE y un modelo bayesiano de puntos ideales. La tercera es un modelo dinámico que pone los seis períodos en una escala común. Comparo cada una con <span class="var">d1</span> diputado por diputado dentro de cada período, con el identificador de la Cámara. Ninguna correlación mezcla períodos.</p>
+  </div>
+
+  <h2>Las mismas votaciones</h2>
+  <p>Antes de mirar las estimaciones conviene mirar los datos. Las dos bases se armaron por separado a partir de los registros de la Cámara. Las 17.202 votaciones de la base de Fábrega están todas en la nuestra, y en ellas coinciden uno a uno los 1.861.669 votos emitidos (Tabla 1). No hay un voto distinto ni uno que esté en una base y falte en la otra.</p>
+
+  <p>Las diferencias son de cobertura. La base de Fábrega termina el 2 de junio de 2025 y la de B-Call sigue hasta el fin del período, en marzo de 2026, con 733 votaciones más. Hay también 99 votaciones de proyectos de ley anteriores a esa fecha que solo están en la nuestra. En diputados, las dos bases comparten 803 casos de diputado y período. Fábrega estima además a cinco diputados que votaron en el 10% o menos de las votaciones de su período, el umbral bajo el cual B-Call no estima.</p>
+</div>
+
+<figure class="ancho">
+  <div class="tabla-envoltura">
+    <table id="tabla-votos"><thead></thead><tbody></tbody></table>
+  </div>
+  <figcaption><b>Tabla 1.</b> Votaciones de proyectos de ley en cada base y votos emitidos (a favor, en contra o abstención) en las votaciones que comparten. En 2022-2026, 733 de las votaciones que solo tiene B-Call son posteriores al 2 de junio de 2025.</figcaption>
+</figure>
+
+<div class="col">
+  <h2>La misma posición</h2>
+  <p>La Figura 1 pone <span class="var">d1</span> contra W-NOMINATE en cada período. Los puntos quedan casi sobre una recta. La correlación va de 0,986 a 0,998, y con el modelo bayesiano de 0,979 a 0,996 (Tabla 2). Con cualquiera de los dos, el orden de los diputados de izquierda a derecha es prácticamente el que da B-Call.</p>
+</div>
+
+<figure class="ancho">
+  <div class="grafico"><div id="fig-posicion" class="lienzo" role="img" aria-label="d1 de B-Call contra W-NOMINATE de Fábrega, un panel por período"></div></div>
+  <figcaption><b>Figura 1.</b> Posición de cada diputado según W-NOMINATE (Fábrega, 2025b) y según <span class="var">d1</span> de B-Call, por período. El color es el bloque que asigna B-Call. Al pasar el cursor sobre un punto aparecen el nombre, el partido y los dos valores.</figcaption>
+</figure>
+
+<div class="col">
+  <p>Con el modelo dinámico la correlación baja a valores entre 0,902 y 0,953. Es esperable, porque ese modelo no estima cada período por su cuenta y a quienes votan poco los deja cerca de cero. Néstor Jofré, con 163 votos en 2002-2006, tiene 0,55 en W-NOMINATE y −0,09 en el modelo dinámico.</p>
+
+  <p>Lo que queda de diferencia está en los bordes. W-NOMINATE mantiene a cada diputado entre −1 y 1, y en cada período entre dos y cuatro diputados quedan pegados a ese límite. <span class="var">d1</span> no tiene ese techo. Por eso Hugo Gutiérrez queda en −1,37 con B-Call y en −1 con W-NOMINATE en 2010-2014, y en 2022-2026 los diputados del Partido Nacional Libertario aparecen, en relación con el resto de la sala, más a la derecha con <span class="var">d1</span> que con W-NOMINATE.</p>
+
+  <p>Hay un caso que interesa más. En 2014-2018 W-NOMINATE ubica a Pedro Browne, Karla Rubilar y Joaquín Godoy en el centro de la sala, entre −0,09 y 0,07. Los tres habían sido diputados de RN en el período anterior y en este la Cámara los registra en Amplitud o como independientes. B-Call los deja en el bloque de derecha, con <span class="var">d1</span> entre 0,28 y 0,43, pero con votos mucho más dispersos que los del resto del bloque. Su <span class="var">d2</span> va de 1,06 a 1,55, cuando la mediana de la derecha en ese período es 0,81. Es el problema que motivó B-Call. Un modelo de una dimensión lee como moderado a quien vota unas veces con un bloque y otras con el otro. Al separar posición y dispersión, lo que aparece son tres diputados que seguían en la derecha sin votar con ella de forma pareja.</p>
+
+  <h2>Lo que agrega d2</h2>
+  <p>Si el argumento de B-Call es correcto, los diputados con <span class="var">d2</span> alto deberían quedar más cerca del centro en W-NOMINATE. La Figura 2 permite verlo período por período, y la relación aparece en cuatro de los seis. En 2002-2006, 2006-2010, 2010-2014 y 2022-2026, la correlación entre <span class="var">d2</span> y la distancia al centro de W-NOMINATE va de −0,29 a −0,36 (Tabla 2). En 2018-2022 no hay relación (−0,01) y en 2014-2018 va en el sentido contrario (0,20).</p>
+</div>
+
+<figure class="ancho">
+  <div class="grafico"><div id="fig-dispersion" class="lienzo" role="img" aria-label="d2 de B-Call contra W-NOMINATE de Fábrega, un panel por período"></div></div>
+  <figcaption><b>Figura 2.</b> Dispersión del voto (<span class="var">d2</span>) de cada diputado según su posición en W-NOMINATE, por período. Si los diputados dispersos fueran leídos como moderados, los puntos altos se juntarían cerca del cero del eje horizontal.</figcaption>
+</figure>
+
+<div class="col">
+  <p>La excepción de 2014-2018 tiene que ver con quiénes eran los dispersos. De los cinco diputados con <span class="var">d2</span> más alto, cuatro estaban del lado izquierdo de la sala. Gabriel Boric, Gaspar Rivas, Giorgio Jackson y Vlado Mirosevic quedan en W-NOMINATE entre −0,79 y −0,97. Es la Cámara de <a href="https://alcatruz.github.io/boric-kast-camara/">Los dos extremos</a>, donde los polos eran también los que menos votaban con su bloque.</p>
+
+  <p>En unas Cámaras los diputados que votan disperso están en el centro y en otras en los bordes. La dispersión no se puede deducir de la posición, y por eso vale la pena medirla aparte.</p>
+</div>
+
+<figure class="ancho">
+  <div class="tabla-envoltura">
+    <table id="tabla-corr"><thead></thead><tbody></tbody></table>
+  </div>
+  <figcaption><b>Tabla 2.</b> Correlación de Pearson entre <span class="var">d1</span> y cada estimación de Fábrega, y correlación de Spearman entre <span class="var">d2</span> y la distancia al centro de W-NOMINATE, por período. Un valor negativo en la última columna indica que los diputados más dispersos quedan más cerca del centro.</figcaption>
+</figure>
+
+<div class="col">
+  <h2>Lo que dice y lo que no</h2>
+  <p>Dos métodos distintos, aplicados a bases armadas por separado, ubican a los diputados en el mismo lugar. En la posición, B-Call no agrega nada a lo que ya está publicado, y eso es una buena noticia, porque quiere decir que el orden de los diputados chilenos de izquierda a derecha no depende del método con que se estime. Lo propio de B-Call está en <span class="var">d2</span>, y la comparación muestra que <span class="var">d2</span> trae información que la posición sola no entrega.</p>
+
+  <p>La comparación no dice cuál de los métodos mide mejor la ideología. Los dos usan las mismas votaciones, así que su acuerdo muestra que el resultado resiste un cambio de modelo, pero no que ese resultado sea la ideología de cada diputado. Tampoco dice nada sobre cambios entre períodos, porque todas las correlaciones son dentro de un mismo período.</p>
+
+  <h3>Datos, código y decisiones</h3>
+  <ul class="notas">
+    <li>La base de Fábrega se bajó de Harvard Dataverse (versión 2.0) el 27 de octubre de 2026. Uso las columnas <code>wnom_ideology</code>, <code>bay_ideology</code> y <code>dim_ideology</code> de su archivo en formato largo y las seis matrices de votación.</li>
+    <li>El artículo presenta la primera estimación como DW-NOMINATE. En el script de replicación (<code>A_Ideology_Estimation.R</code>) se estima con W-NOMINATE, por separado en cada período y en una dimensión, y así la llamo aquí.</li>
+    <li>Las estimaciones de B-Call son las del <a href="https://alcatruz.github.io/bcall-camara-2002-2026/">análisis anterior</a>, sobre las votaciones de proyectos de ley con número de boletín de opendata.camara.cl. A favor 1, en contra −1, abstención 0. Pareos, dispensas y ausencias quedan como dato faltante.</li>
+    <li>Para comparar votos, Afirmativo, En Contra y Abstención de las matrices de Fábrega se cruzan con a favor, en contra y abstención. Dispensado, No Vota y las celdas vacías cuentan como sin voto. Los 1.861.669 votos son las celdas de diputado y votación con voto en las dos bases.</li>
+    <li>Pablo Prieto figura en la base de Fábrega con el identificador 209 también en 2018-2022, donde la Cámara usa el 1064. Lo recodifiqué para incluirlo.</li>
+    <li>El código y los datos están en el <a href="https://github.com/Alcatruz/bcall-wnominate-camara">repositorio</a>. Los archivos que contienen estimaciones de Fábrega (<code>datos/comparacion.csv</code> y <code>datos/datos.js</code>) se distribuyen con su misma licencia, CC BY-NC-SA 4.0.</li>
+  </ul>
+
+  <h3>Referencias</h3>
+  <p class="ref">Fábrega, J. (2025a). Ideological positions in the Chilean Chamber of Deputies (2002–2026). A legislative roll-call dataset. <i>Data in Brief, 63</i>, 112163. <a href="https://doi.org/10.1016/j.dib.2025.112163">https://doi.org/10.1016/j.dib.2025.112163</a></p>
+  <p class="ref">Fábrega, J. (2025b). <i>Ideological estimates of the Chilean Chamber of Deputies, 2002–2026</i> (Versión 2.0) [Conjunto de datos]. Harvard Dataverse. <a href="https://doi.org/10.7910/DVN/FOXOIT">https://doi.org/10.7910/DVN/FOXOIT</a></p>
+  <p class="ref">Toro-Maureira, S., Reutter, J., Valenzuela, L., Alcatruz, D. y Valenzuela, M. (2025). B-Call: integrating ideological position and voting cohesion in legislative behavior. <i>Frontiers in Political Science, 7</i>, 1670089. <a href="https://doi.org/10.3389/fpos.2025.1670089">https://doi.org/10.3389/fpos.2025.1670089</a></p>
+
+  <hr>
+  <footer>Daniel Alcatruz · 2026</footer>
+</div>
+</article>
+</main>
+
+<script src="datos/datos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/plotly.js-basic-dist-min@2.35.2/plotly-basic.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  var D = window.BW;
+  if (!D) return;
+
+  var PER = ["2002-2006", "2006-2010", "2010-2014", "2014-2018", "2018-2022", "2022-2026"];
+  function num(x, d) { return x.toLocaleString("es-CL", { minimumFractionDigits: d, maximumFractionDigits: d }).replace("-", "−"); }
+  function ent(x) { return x.toLocaleString("es-CL"); }
+  function corto(p) { return p.slice(2, 4) + "-" + p.slice(7, 9); }
+  function fila(p) { return D.per.filter(function (r) { return r.periodo === p; })[0]; }
+
+  // Tablas -------------------------------------------------------------------
+  function tablas() {
+    var angosto = window.innerWidth < 600;
+    var t1 = angosto
+      ? ["Período", "Fábrega", "B-Call", "Comunes", "Votos iguales", "Distintos"]
+      : ["Período", "Votaciones de Fábrega", "Votaciones de B-Call", "Votaciones comunes", "Votos que coinciden", "Votos distintos"];
+    document.querySelector("#tabla-votos thead").innerHTML = "<tr>" + t1.map(function (h) { return "<th>" + h + "</th>"; }).join("") + "</tr>";
+    var filas = PER.map(function (p) {
+      var r = fila(p);
+      return [angosto ? corto(p) : p, ent(r.votaciones_fabrega), ent(r.votaciones_bcall), ent(r.votaciones_comunes), ent(r.votos_iguales), ent(r.votos_distintos)];
+    });
+    var tot = ["votaciones_fabrega", "votaciones_bcall", "votaciones_comunes", "votos_iguales", "votos_distintos"].map(function (k) {
+      return ent(D.per.reduce(function (s, r) { return s + r[k]; }, 0));
+    });
+    filas.push(["Total"].concat(tot));
+    document.querySelector("#tabla-votos tbody").innerHTML = filas.map(function (f, i) {
+      var b = i === filas.length - 1;
+      return "<tr>" + f.map(function (c) { return b ? "<td><b>" + c + "</b></td>" : "<td>" + c + "</td>"; }).join("") + "</tr>";
+    }).join("");
+
+    var t2 = angosto
+      ? ["Período", "n", "W-NOM", "Bayes.", "Dinám.", "d2 y centro"]
+      : ["Período", "Diputados", "d1 y W-NOMINATE", "d1 y bayesiano", "d1 y dinámico", "d2 y distancia al centro"];
+    document.querySelector("#tabla-corr thead").innerHTML = "<tr>" + t2.map(function (h) { return "<th>" + h + "</th>"; }).join("") + "</tr>";
+    document.querySelector("#tabla-corr tbody").innerHTML = PER.map(function (p) {
+      var r = fila(p);
+      return "<tr><td>" + (angosto ? corto(p) : p) + "</td><td>" + r.diputados + "</td><td>" + num(r.r_wnom, 3) + "</td><td>" +
+        num(r.r_bay, 3) + "</td><td>" + num(r.r_dyn, 3) + "</td><td>" + num(r.rho_d2_centro, 2) + "</td></tr>";
+    }).join("");
+  }
+  tablas();
+
+  if (!window.Plotly) return;
+  var CONFIG = { displayModeBar: false, responsive: true, scrollZoom: false };
+  function tok() {
+    var s = getComputedStyle(document.documentElement);
+    var g = function (n) { return s.getPropertyValue(n).trim(); };
+    return { surface: g("--surface"), ink: g("--ink"), ink2: g("--ink-2"), muted: g("--muted"), grid: g("--grid"),
+             axis: g("--axis"), izq: g("--izq"), der: g("--der"), neutro: g("--neutro") };
+  }
+  function ancho(id) { return document.getElementById(id).clientWidth; }
+
+  // Seis paneles, uno por período, con los mismos ejes ------------------------
+  function paneles(id, T, cfg) {
+    var cols = ancho(id) < 600 ? 2 : 3, filas = PER.length / cols;
+    var gx = 0.06, gy = cols === 2 ? 0.07 : 0.12;
+    var w = (1 - gx * (cols - 1)) / cols, h = (1 - gy * (filas - 1)) / filas;
+    var alto = cols === 2 ? 760 : 560, mt = 64, mb = 52;
+    var data = [], layout = {
+      paper_bgcolor: T.surface, plot_bgcolor: T.surface, showlegend: true,
+      font: { family: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif', size: 11, color: T.ink2 },
+      separators: ",.", height: alto, margin: { l: 52, r: 12, t: mt, b: mb },
+      hoverlabel: { bgcolor: T.surface, bordercolor: T.axis, font: { color: T.ink, size: 13 } },
+      // la leyenda va sobre los títulos de los paneles de la primera fila
+      legend: { orientation: "h", x: 0, xanchor: "left", y: 1 + 24 / (alto - mt - mb), yanchor: "bottom", font: { color: T.ink2, size: 12 } },
+      dragmode: false, annotations: []
+    };
+    PER.forEach(function (p, i) {
+      var c = i % cols, f = Math.floor(i / cols), k = i === 0 ? "" : String(i + 1);
+      var x0 = c * (w + gx), y1 = 1 - f * (h + gy);
+      var ejeBase = { gridcolor: T.grid, linecolor: T.axis, zeroline: false, fixedrange: true, tickfont: { color: T.muted, size: 10 } };
+      layout["xaxis" + k] = Object.assign({}, ejeBase, { domain: [x0, x0 + w], anchor: "y" + k, range: cfg.xr, dtick: cfg.xd,
+        title: f === filas - 1 ? { text: cfg.xt, font: { color: T.ink2, size: 11 } } : undefined });
+      layout["yaxis" + k] = Object.assign({}, ejeBase, { domain: [y1 - h, y1], anchor: "x" + k, range: cfg.yr, dtick: cfg.yd,
+        title: c === 0 ? { text: cfg.yt, font: { color: T.ink2, size: 11 } } : undefined });
+      layout.annotations.push({ text: "<b>" + p + "</b>", xref: "x" + k + " domain", yref: "y" + k + " domain", x: 0, y: 1,
+        xanchor: "left", yanchor: "bottom", yshift: 2, showarrow: false, font: { color: T.ink, size: 12 } });
+      [["left", "Bloque de izquierda", T.izq], ["right", "Bloque de derecha", T.der]].forEach(function (b) {
+        var pts = D.dip.filter(function (d) { return d.p === p && d.b === b[0] && d.w !== null; });
+        data.push({
+          type: "scatter", mode: "markers", name: b[1], legendgroup: b[0], showlegend: i === 0,
+          xaxis: "x" + k, yaxis: "y" + k,
+          x: pts.map(function (d) { return d[cfg.x]; }), y: pts.map(function (d) { return d[cfg.y]; }),
+          customdata: pts.map(function (d) { return [d.n, d.pa, num(d.w, 2), num(d.d1, 2), num(d.d2, 2)]; }),
+          hovertemplate: "<b>%{customdata[0]}</b> · %{customdata[1]}<br>W-NOMINATE %{customdata[2]}<br>d1 %{customdata[3]} · d2 %{customdata[4]}<extra>" + p + "</extra>",
+          marker: { size: 6, color: b[2], opacity: 0.85, line: { color: T.surface, width: 0.5 } }
+        });
+      });
+    });
+    Plotly.react(id, data, layout, CONFIG);
+  }
+
+  function todo() {
+    var T = tok();
+    paneles("fig-posicion", T, { x: "w", y: "d1", xt: "W-NOMINATE", yt: "d1", xr: [-1.1, 1.1], xd: 0.5, yr: [-1.5, 1.3], yd: 0.5 });
+    paneles("fig-dispersion", T, { x: "w", y: "d2", xt: "W-NOMINATE", yt: "d2", xr: [-1.1, 1.1], xd: 0.5, yr: [0.2, 2.35], yd: 0.5 });
+  }
+  todo();
+  if (window.matchMedia) {
+    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+    if (mq.addEventListener) mq.addEventListener("change", todo);
+  }
+  var t;
+  window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(function () { tablas(); todo(); }, 200); });
+})();
+</script>
+</body>
+</html>
