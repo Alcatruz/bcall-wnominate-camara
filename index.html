@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Medir dos veces</title>
-<meta name="description" content="B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Donde se separan es en la dispersión del voto.">
+<meta name="description" content="B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Lo que B-Call agrega es la dispersión del voto, que dice más en los extremos que en el centro.">
 <meta name="author" content="Daniel Alcatruz">
 <meta property="og:title" content="Medir dos veces">
-<meta property="og:description" content="B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Donde se separan es en la dispersión del voto.">
+<meta property="og:description" content="B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Lo que B-Call agrega es la dispersión del voto, que dice más en los extremos que en el centro.">
 <meta property="og:type" content="article">
 <style>
 :root {
@@ -120,7 +120,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
 <header class="cabecera col">
   <p class="antetitulo">Comportamiento legislativo · Chile</p>
   <h1>Medir dos veces</h1>
-  <p class="bajada">B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Donde se separan es en la dispersión del voto.</p>
+  <p class="bajada">B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Lo que B-Call agrega es la dispersión del voto, que dice más en los extremos que en el centro.</p>
   <p class="firma"><a href="https://github.com/Alcatruz">Daniel Alcatruz</a> · 27 de octubre de 2026</p>
 </header>
 
@@ -162,33 +162,48 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
 
   <p>Lo que queda de diferencia está en los bordes. W-NOMINATE mantiene a cada diputado entre −1 y 1, y en cada período entre 2 y 4 diputados quedan pegados a ese límite. <span class="var">d1</span> no tiene ese techo. Por eso Hugo Gutiérrez queda en −1,37 con B-Call y en −1 con W-NOMINATE en 2010-2014. Y en 2022-2026 los diputados del Partido Nacional Libertario aparecen, en relación con el resto de la sala, más a la derecha con <span class="var">d1</span> que con W-NOMINATE.</p>
 
-  <p>Hay un caso que interesa más. En 2014-2018 W-NOMINATE ubica a Pedro Browne, Karla Rubilar y Joaquín Godoy en el centro de la sala, entre −0,09 y 0,07. Los tres habían sido diputados de RN en el período anterior y en este la Cámara los registra en Amplitud o como independientes. B-Call los deja en el bloque de derecha, con <span class="var">d1</span> entre 0,28 y 0,43, pero con votos mucho más dispersos que los del resto del bloque. Su <span class="var">d2</span> va de 1,06 a 1,55, cuando la mediana de la derecha en ese período es 0,81. Es el problema que motivó B-Call. Un modelo de una dimensión lee como moderado a quien vota unas veces con un bloque y otras con el otro. Al separar posición y dispersión, lo que aparece son tres diputados que seguían en la derecha sin votar con ella de forma pareja.</p>
+  <p>Hay también una diferencia en el centro. En 2014-2018 W-NOMINATE ubica a Pedro Browne, Karla Rubilar y Joaquín Godoy en el medio de la sala, entre −0,09 y 0,07. Los tres habían sido diputados de RN en el período anterior y en este la Cámara los registra en Amplitud o como independientes. Con <span class="var">d1</span> quedan en el borde del bloque de derecha, entre 0,28 y 0,43.</p>
 
   <h2>Lo que agrega d2</h2>
-  <p>Si el argumento de B-Call es correcto, los diputados con <span class="var">d2</span> alto deberían quedar más cerca del centro en W-NOMINATE. La Figura 2 permite verlo período por período, y la relación aparece en cuatro de los seis. En 2002-2006, 2006-2010, 2010-2014 y 2022-2026, la correlación entre <span class="var">d2</span> y la distancia al centro de W-NOMINATE va de −0,29 a −0,36 (Tabla 2). En 2018-2022 no hay relación (−0,01) y en 2014-2018 va en el sentido contrario (0,20).</p>
+  <p>La Figura 2 pone <span class="var">d2</span> contra W-NOMINATE. En cuatro de los seis períodos los diputados con <span class="var">d2</span> más alto quedan más cerca del centro, con correlaciones entre −0,29 y −0,36 (Tabla 2). Sería fácil leer eso como prueba de que W-NOMINATE toma por moderado a quien vota disperso. Pero una parte de esa relación viene de cómo se calcula <span class="var">d2</span>.</p>
+
+  <p>B-Call estandariza cada votación y le da signo según el bloque, y <span class="var">d2</span> es la desviación estándar de esos valores para cada diputado. Un diputado de centro que vota siempre según su posición igual vota unas veces con la derecha y otras con la izquierda. Sus valores cambian de signo y su <span class="var">d2</span> sube, aunque nunca se aparte de lo que su posición predice.</p>
 </div>
 
 <figure class="ancho">
   <div class="grafico"><div id="fig-dispersion" class="lienzo" role="img" aria-label="d2 de B-Call contra W-NOMINATE de Fábrega, un panel por período"></div></div>
-  <figcaption><b>Figura 2.</b> Dispersión del voto (<span class="var">d2</span>) de cada diputado según su posición en W-NOMINATE, por período. Si los diputados dispersos fueran leídos como moderados, los puntos altos se juntarían cerca del cero del eje horizontal.</figcaption>
+  <figcaption><b>Figura 2.</b> Dispersión del voto (<span class="var">d2</span>) de cada diputado según su posición en W-NOMINATE, por período. Con dos bloques, <span class="var">d2</span> tiende a subir hacia el centro por cómo se calcula. El punto destacado en cada panel es el diputado de la Tabla 3.</figcaption>
 </figure>
 
 <div class="col">
-  <p>La excepción de 2014-2018 tiene que ver con quiénes eran los dispersos. De los cinco diputados con <span class="var">d2</span> más alto, cuatro estaban del lado izquierdo de la sala. Gabriel Boric, Gaspar Rivas, Giorgio Jackson y Vlado Mirosevic quedan en W-NOMINATE entre −0,79 y −0,97. Es la Cámara de <a href="https://alcatruz.github.io/boric-kast-camara/">Los dos extremos</a>, donde los polos eran también los que menos votaban con su bloque.</p>
-
-  <p>En unas Cámaras los diputados que votan disperso están en el centro y en otras en los bordes. La dispersión no se deduce de la posición. Hay que medirla aparte.</p>
+  <p>Para medir el efecto simulé una Cámara de 155 diputados que votan según su posición en una dimensión, con dos bloques, 15 moderados coherentes y 10 diputados de centro que votan con mucho error. Cuando la mayoría de las votaciones corta entre los bloques, los moderados coherentes quedan en promedio en el percentil 89 de <span class="var">d2</span>, cerca de los erráticos, que quedan en el 97. Entre los diputados coherentes, la correlación entre <span class="var">d2</span> y la distancia al centro es de −0,93. Con los cortes repartidos por todo el eje el efecto baja, pero los moderados siguen en el percentil 72. En el centro, entonces, <span class="var">d2</span> no separa al moderado del que vota disperso, y la correlación de la Tabla 2 puede aparecer sin un solo diputado errático.</p>
 </div>
 
 <figure class="ancho">
   <div class="tabla-envoltura">
     <table id="tabla-corr"><thead></thead><tbody></tbody></table>
   </div>
-  <figcaption><b>Tabla 2.</b> Correlación de Pearson entre <span class="var">d1</span> y cada estimación de Fábrega, y correlación de Spearman entre <span class="var">d2</span> y la distancia al centro de W-NOMINATE, por período. Un valor negativo en la última columna indica que los diputados más dispersos quedan más cerca del centro.</figcaption>
+  <figcaption><b>Tabla 2.</b> Correlación de Pearson entre <span class="var">d1</span> y cada estimación de Fábrega, y correlación de Spearman entre <span class="var">d2</span> y la distancia al centro de W-NOMINATE, por período. Un valor negativo en la última columna indica que los diputados más dispersos quedan más cerca del centro, algo que en parte se espera por cómo se calcula <span class="var">d2</span>.</figcaption>
 </figure>
 
 <div class="col">
+  <p>En los extremos es distinto. En la simulación, los extremos coherentes quedan alrededor del percentil 42, así que un extremo con <span class="var">d2</span> alto no lo es por construcción. La Tabla 3 muestra, en cada período, al diputado con el <span class="var">d2</span> más alto dentro de la cuarta parte más extrema de W-NOMINATE. Los seis se apartan de la mayoría de su bloque más que la mediana de la Cámara, y entre el 72% y el 98% de esas veces lo hacen en votaciones en que los dos bloques votaron igual. En la mediana de la Cámara, esa proporción va de 43% a 62%.</p>
+</div>
+
+<figure class="ancho">
+  <div class="tabla-envoltura">
+    <table id="tabla-extremos"><thead></thead><tbody></tbody></table>
+  </div>
+  <figcaption><b>Tabla 3.</b> En cada período, el diputado con el <span class="var">d2</span> más alto dentro de la cuarta parte más extrema de W-NOMINATE. Porcentaje de las votaciones en que se apartó de la mayoría de su bloque y, de esas, porcentaje en que la mayoría de los dos bloques votó lo mismo, junto a las medianas de la Cámara. Solo cuentan las votaciones en que los dos bloques tienen una mayoría definida.</figcaption>
+</figure>
+
+<div class="col">
+  <p>Hugo Gutiérrez es el caso más claro. En 2010-2014 se apartó de su bloque en el 20,5% de las votaciones, y en el 98% de esos casos la izquierda y la derecha estaban de acuerdo. W-NOMINATE lo deja en −1, el tope de su escala, y <span class="var">d1</span> también lo empuja hacia afuera. Lo que solo <span class="var">d2</span> registra es que ese borde se arma votando contra acuerdos de toda la sala. En 2014-2018 la correlación de la Tabla 2 incluso se invierte (0,20), porque cuatro de los cinco diputados con <span class="var">d2</span> más alto estaban del lado izquierdo, entre −0,79 y −0,97 en W-NOMINATE. Boric era uno de ellos. Es la Cámara de <a href="https://alcatruz.github.io/boric-kast-camara/">Los dos extremos</a>.</p>
+
   <h2>Lo que dice y lo que no</h2>
-  <p>Dos métodos distintos, con bases armadas por separado, dibujan la misma sala. En la posición, B-Call no agrega nada a lo que ya está publicado. Y eso es una buena noticia, porque la ubicación de los diputados chilenos no depende del método con que se estime. Lo propio de B-Call está en <span class="var">d2</span>, y la comparación muestra que <span class="var">d2</span> trae información que la posición sola no entrega.</p>
+  <p>Dos métodos distintos, con bases armadas por separado, dibujan la misma sala. En la posición, B-Call no agrega nada a lo que ya está publicado. Y eso es una buena noticia, porque la ubicación de los diputados chilenos no depende del método con que se estime.</p>
+
+  <p>Lo que agrega es <span class="var">d2</span>, y hay que leerlo según dónde está cada diputado. Un <span class="var">d2</span> alto en el centro es lo esperable y no dice si el diputado es moderado o vota disperso. En los extremos sí dice algo. En esta Cámara marca a quienes votan contra los acuerdos de ambos bloques, algo que en W-NOMINATE aparece solo como más extremismo.</p>
 
   <p>La comparación no dice cuál de los métodos mide mejor la ideología. Los dos usan las mismas votaciones, así que su acuerdo muestra que el resultado resiste un cambio de modelo. Si ese resultado es la ideología de cada diputado es otra pregunta. Tampoco dice nada sobre cambios entre períodos, porque todas las correlaciones son dentro de un mismo período.</p>
 
@@ -199,6 +214,9 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
     <li>Las estimaciones de B-Call son las del <a href="https://alcatruz.github.io/bcall-camara-2002-2026/">análisis anterior</a>, sobre las votaciones de proyectos de ley con número de boletín de opendata.camara.cl. A favor 1, en contra −1, abstención 0. Pareos, dispensas y ausencias quedan como dato faltante.</li>
     <li>Para comparar votos, Afirmativo, En Contra y Abstención de las matrices de Fábrega se cruzan con a favor, en contra y abstención. Dispensado, No Vota y las celdas vacías cuentan como sin voto. Los 1.861.669 votos son las celdas de diputado y votación con voto en las dos bases.</li>
     <li>Pablo Prieto figura en la base de Fábrega con el identificador 209 también en 2018-2022, donde la Cámara usa el 1064. Lo recodifiqué para incluirlo.</li>
+    <li>La simulación está en <code>R/02_simulacion.R</code>. Son 155 diputados en una dimensión, 65 por bloque con posiciones normales centradas en −0,6 y 0,6, y 15 moderados y 10 erráticos con posiciones uniformes entre −0,25 y 0,25. Votan según un modelo probit con poco error (β = 8) o, los erráticos, con mucho (β = 1), en 1.500 votaciones. Los puntos de corte se concentran entre los bloques, se reparten por todo el eje o mezclan las dos cosas por mitades. Son 20 repeticiones por escenario, estimadas con <code>bcall_auto()</code> igual que en el análisis por período. Con la mezcla, los moderados coherentes quedan en el percentil 88 y la correlación entre los coherentes es −0,43.</li>
+    <li>El lado de un bloque en una votación es la opción, a favor o en contra, que eligió la mayoría de sus miembros. Si empatan, la votación no cuenta. Apartarse del bloque incluye abstenerse.</li>
+    <li>Una primera versión de este texto, del 27 de octubre de 2026, leía la correlación entre <span class="var">d2</span> y la cercanía al centro como apoyo al argumento de B-Call. La simulación muestra que esa correlación puede aparecer por construcción, y corregí el texto el 28 de octubre.</li>
     <li>El código y los datos están en el <a href="https://github.com/Alcatruz/bcall-wnominate-camara">repositorio</a>. Los archivos que contienen estimaciones de Fábrega (<code>datos/comparacion.csv</code> y <code>datos/datos.js</code>) se distribuyen con su misma licencia, CC BY-NC-SA 4.0.</li>
   </ul>
 
@@ -256,6 +274,17 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
       return "<tr><td>" + (angosto ? corto(p) : p) + "</td><td>" + r.diputados + "</td><td>" + num(r.r_wnom, 3) + "</td><td>" +
         num(r.r_bay, 3) + "</td><td>" + num(r.r_dyn, 3) + "</td><td>" + num(r.rho_d2_centro, 2) + "</td></tr>";
     }).join("");
+
+    function pc(x) { return num(100 * x, 1) + "%"; }
+    var t3 = angosto
+      ? ["Período", "Diputado", "W-NOM", "d2", "Se aparta", "Con acuerdo", "Mediana, se aparta", "Mediana, con acuerdo"]
+      : ["Período", "Diputado", "W-NOMINATE", "d2", "Se aparta de su bloque", "De esas, con acuerdo de ambos bloques", "Mediana de la Cámara, se aparta", "Mediana de la Cámara, con acuerdo"];
+    document.querySelector("#tabla-extremos thead").innerHTML = "<tr>" + t3.map(function (h) { return "<th>" + h + "</th>"; }).join("") + "</tr>";
+    document.querySelector("#tabla-extremos tbody").innerHTML = PER.map(function (p) {
+      var e = D.ext.filter(function (x) { return x.p === p; })[0], r = fila(p);
+      return "<tr><td>" + (angosto ? corto(p) : p) + "</td><td>" + (angosto ? e.ap : e.n) + " (" + e.pa + ")</td><td>" + num(e.w, 2) + "</td><td>" +
+        num(e.d2, 2) + "</td><td>" + pc(e.cb) + "</td><td>" + pc(e.ca) + "</td><td>" + pc(r.med_contra_bloque) + "</td><td>" + pc(r.med_contra_acuerdo) + "</td></tr>";
+    }).join("");
   }
   tablas();
 
@@ -305,6 +334,16 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
           marker: { size: 6, color: b[2], opacity: 0.85, line: { color: T.surface, width: 0.5 } }
         });
       });
+      if (cfg.marcar) {
+        D.ext.filter(function (e) { return e.p === p; }).forEach(function (e) {
+          data.push({
+            type: "scatter", mode: "markers+text", showlegend: false, hoverinfo: "skip",
+            xaxis: "x" + k, yaxis: "y" + k, x: [e.w], y: [e[cfg.y]], text: [e.ap],
+            textposition: e.w < 0 ? "middle right" : "middle left", textfont: { color: T.ink, size: 11 },
+            marker: { size: 9, color: T.ink, line: { color: T.surface, width: 1.5 } }
+          });
+        });
+      }
     });
     Plotly.react(id, data, layout, CONFIG);
   }
@@ -312,7 +351,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
   function todo() {
     var T = tok();
     paneles("fig-posicion", T, { x: "w", y: "d1", xt: "W-NOMINATE", yt: "d1", xr: [-1.1, 1.1], xd: 0.5, yr: [-1.5, 1.3], yd: 0.5 });
-    paneles("fig-dispersion", T, { x: "w", y: "d2", xt: "W-NOMINATE", yt: "d2", xr: [-1.1, 1.1], xd: 0.5, yr: [0.2, 2.35], yd: 0.5 });
+    paneles("fig-dispersion", T, { x: "w", y: "d2", xt: "W-NOMINATE", yt: "d2", xr: [-1.1, 1.1], xd: 0.5, yr: [0.2, 2.35], yd: 0.5, marcar: true });
   }
   todo();
   if (window.matchMedia) {

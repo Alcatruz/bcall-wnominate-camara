@@ -24,18 +24,17 @@
 #      que en B-Call. Dispensado, No Vota y NA cuentan como sin voto.
 #   4. d1 se compara con Pearson. d2 contra la distancia al centro de
 #      W-NOMINATE, |wnom|, con Spearman.
+#   5. Rupturas con el propio bloque B-Call, y cuántas de ellas fueron contra
+#      un acuerdo de los dos bloques (ver PASO 4).
 #
 # ESCRIBE (en post_bcall_wnominate/datos/)
 #   comparacion.csv        una fila por diputado x período, con las
 #                          estimaciones de los dos lados (CC BY-NC-SA 4.0)
 #   resumen_periodos.csv   una fila por período
-#   datos.js               lo que lee la página (CC BY-NC-SA 4.0)
+# La página la arma 03_pagina.R.
 # =============================================================================
 
-suppressPackageStartupMessages({
-  library(tidyverse)
-  library(jsonlite)
-})
+suppressPackageStartupMessages(library(tidyverse))
 
 if (!file.exists("data/votaciones.rds")) stop("Correr desde la raíz de bcall_nominate_chile/.")
 DIR_FAB <- "data/fabrega_2025"
@@ -152,26 +151,65 @@ cat("totales: votaciones comunes", sum(resumen$votaciones_comunes),
 
 
 # ---------------------------------------------------------------------------
-# PASO 4 — exportar
+# PASO 4 — rupturas con el propio bloque
+# ---------------------------------------------------------------------------
+# El lado de un bloque B-Call en una votación es la opción (a favor o en
+# contra) que eligió la mayoría de sus miembros; si empatan, no hay lado. Solo
+# cuentan las votaciones en que los dos bloques tienen lado. Apartarse del
+# bloque es no votar su lado, abstenerse incluido. Una ruptura es "contra un
+# acuerdo" cuando los dos bloques tenían el mismo lado.
+vb <- votos_bc %>%
+  filter(!is.na(voto_num)) %>%
+  inner_join(cmp %>% select(periodo, id_parlamentario, bloque), by = c("periodo", "id_parlamentario"))
+
+lados <- vb %>%
+  filter(voto_num %in% c(1, -1)) %>%
+  count(id_votacion, bloque, voto_num) %>%
+  group_by(id_votacion, bloque) %>%
+  summarise(lado = if (sum(n == max(n)) > 1) NA_real_ else voto_num[which.max(n)], .groups = "drop") %>%
+  pivot_wider(names_from = bloque, values_from = lado, names_prefix = "lado_")
+
+rupturas <- vb %>%
+  left_join(lados, by = "id_votacion") %>%
+  mutate(propio = if_else(bloque == "left", lado_left, lado_right),
+         otro   = if_else(bloque == "left", lado_right, lado_left)) %>%
+  filter(!is.na(propio), !is.na(otro)) %>%
+  group_by(periodo, id_parlamentario) %>%
+  summarise(contra_bloque = mean(voto_num != propio),
+            contra_acuerdo = if (any(voto_num != propio)) sum(voto_num != propio & propio == otro) / sum(voto_num != propio) else NA_real_,
+            .groups = "drop")
+
+cmp <- cmp %>% left_join(rupturas, by = c("periodo", "id_parlamentario"))
+
+resumen <- resumen %>%
+  left_join(cmp %>% group_by(periodo) %>%
+              summarise(med_contra_bloque = median(contra_bloque, na.rm = TRUE),
+                        med_contra_acuerdo = median(contra_acuerdo, na.rm = TRUE), .groups = "drop"),
+            by = "periodo")
+
+# en cada período, el diputado de la cuarta parte más extrema de W-NOMINATE
+# con el d2 más alto
+extremos <- cmp %>%
+  group_by(periodo) %>%
+  filter(percent_rank(abs(wnom)) >= 0.75) %>%
+  slice_max(d2, n = 1) %>%
+  ungroup()
+cat("\nextremo con d2 más alto por período:\n")
+print.data.frame(extremos %>% select(periodo, nombre_completo, partido, wnom, d1, d2, contra_bloque, contra_acuerdo) %>%
+                   mutate(across(where(is.double), ~ round(.x, 3))), row.names = FALSE)
+print.data.frame(resumen %>% select(periodo, med_contra_bloque, med_contra_acuerdo) %>%
+                   mutate(across(where(is.double), ~ round(.x, 3))), row.names = FALSE)
+
+
+# ---------------------------------------------------------------------------
+# PASO 5 — exportar
 # ---------------------------------------------------------------------------
 comparacion <- cmp %>%
-  select(periodo, id_parlamentario, nombre_completo, partido, bloque, d1, d2, wnom, bay, dyn) %>%
+  mutate(extremo_d2_max = id_parlamentario %in% extremos$id_parlamentario &
+           paste(periodo, id_parlamentario) %in% paste(extremos$periodo, extremos$id_parlamentario)) %>%
+  select(periodo, id_parlamentario, nombre_completo, partido, bloque, d1, d2, wnom, bay, dyn,
+         contra_bloque, contra_acuerdo, extremo_d2_max) %>%
   arrange(periodo, d1)
 write_csv(comparacion, file.path(DIR_OUT, "comparacion.csv"), na = "")
 write_csv(resumen, file.path(DIR_OUT, "resumen_periodos.csv"), na = "")
-
-# nombre en orden natural para la página
-nombre_natural <- function(x) {
-  partes <- str_split_fixed(x, ", ", 2)
-  if_else(partes[, 2] == "", x, paste(partes[, 2], partes[, 1]))
-}
-pagina <- list(
-  dip = comparacion %>%
-    transmute(p = periodo, n = nombre_natural(nombre_completo), pa = replace_na(partido, "IND"), b = bloque,
-              d1 = round(d1, 3), d2 = round(d2, 3), w = round(wnom, 3)),
-  per = resumen %>%
-    mutate(across(c(r_wnom, r_bay, r_dyn, rho_d2_centro), ~ round(.x, 3)))
-)
-writeLines(paste0("window.BW = ", toJSON(pagina, dataframe = "rows", na = "null", auto_unbox = TRUE), ";"),
-           file.path(DIR_OUT, "datos.js"), useBytes = TRUE)
 cat("\nlisto\n")
