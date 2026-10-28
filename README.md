@@ -1,6 +1,6 @@
 # Medir dos veces
 
-B-Call comparado con las estimaciones ideológicas de Fábrega (2025) para la Cámara de Diputados de Chile, 2002-2026.
+B-Call comparado con las estimaciones ideológicas de Fábrega (2025) para la Cámara de Diputados de Chile, 2002-2026, más lo que va de 2026-2030.
 
 * [Leer el análisis →](https://alcatruz.github.io/bcall-wnominate-camara/)**
 
@@ -11,19 +11,21 @@ El post está en `index.html` y se publica con GitHub Pages.
 | Ruta | Qué es |
 |---|---|
 | `index.html` | El post, con gráficos interactivos (Plotly) |
-| `datos/comparacion.csv` | `d1`, `d2` y bloque B-Call junto a W-NOMINATE, el modelo bayesiano y el dinámico de Fábrega, más las rupturas con el propio bloque, por diputado y período (803 filas) |
+| `datos/comparacion.csv` | `d1`, `d2` y bloque B-Call junto a W-NOMINATE, el modelo bayesiano y el dinámico de Fábrega, más las rupturas con el propio bloque, por diputado y período (957 filas; en 2026-2030 el W-NOMINATE es propio) |
 | `datos/resumen_periodos.csv` | Una fila por período con votaciones de cada base, votos que coinciden, correlaciones y medianas de rupturas |
 | `datos/datos.js` | Los datos que lee la página |
 | `datos/votos_*.json` | Votación por votación, uno por período, con las votaciones en que cada diputado se apartó de su bloque |
+| `datos/wnominate_2026_2030.csv` | W-NOMINATE de 2026-2030, que la base de Fábrega no cubre, estimado con su código |
+| `R/00_wnominate_2026.R` | Estima W-NOMINATE para 2026-2030 con la especificación de Fábrega |
 | `R/01_comparar.R` | Cruza las dos bases y calcula las rupturas con el propio bloque |
-| `R/02_votos.R` | Arma los votos de cada período para la Figura 3 (`datos/votos_*.json`) |
+| `R/02_votos.R` | Arma los votos de cada período para la Figura 4 (`datos/votos_*.json`) |
 | `R/03_pagina.R` | Arma `datos/datos.js` |
 
 ## Datos y decisiones
 
 - Estimaciones de Fábrega del depósito en Harvard Dataverse, versión 2.0 ([doi:10.7910/DVN/FOXOIT](https://doi.org/10.7910/DVN/FOXOIT)).
 - Estimaciones de B-Call por período del [análisis anterior](https://github.com/Alcatruz/bcall-camara-2002-2026), sobre las votaciones de proyectos de ley con número de boletín de opendata.camara.cl.
-- Se compara dentro de cada período, diputado por diputado, con el identificador de la Cámara. 2026-2030 queda fuera porque la base de Fábrega no lo cubre.
+- Se compara dentro de cada período, diputado por diputado, con el identificador de la Cámara. La base de Fábrega no cubre 2026-2030. Para ese período se usa un W-NOMINATE estimado con su código sobre los votos hasta el 9 de septiembre de 2026 (`R/00_wnominate_2026.R`).
 - El script se corre desde la raíz de un proyecto local que guarda el depósito de Fábrega en `data/fabrega_2025/` y la base de votos de B-Call en `outputs/data/post_bcall/`. Esos archivos no están en este repositorio.
 
 ## Licencia

@@ -6,6 +6,8 @@
 #   Rscript post_bcall_wnominate/R/01_comparar.R
 #
 # FUENTES
+#   post_bcall_wnominate/datos/wnominate_2026_2030.csv
+#                                      W-NOMINATE propio de 2026-2030 (00_wnominate_2026.R)
 #   data/fabrega_2025/                 depósito de Fábrega en Harvard Dataverse,
 #                                      doi:10.7910/DVN/FOXOIT, versión 2.0, sin
 #                                      modificar (CC BY-NC-SA 4.0)
@@ -17,7 +19,10 @@
 #
 # DECISIONES
 #   1. Se compara dentro de cada período, diputado por diputado, con el id de
-#      la Cámara. 2026-2030 queda fuera porque Fábrega no lo cubre.
+#      la Cámara. Fábrega no cubre 2026-2030. Para ese período se usa el
+#      W-NOMINATE de 00_wnominate_2026.R, estimado con su especificación sobre
+#      los votos hasta el 9 de septiembre de 2026. Las comparaciones de
+#      votaciones y votos (PASO 2) quedan en los seis períodos de Fábrega.
 #   2. Pablo Prieto Lorca figura en Fábrega con el id 209 también en 2018-2022,
 #      donde la Cámara usa el 1064. Se recodifica a 1064 en ese período.
 #   3. En sus matrices, Afirmativo = 1, En Contra = -1, Abstención = 0, igual
@@ -43,6 +48,7 @@ if (!dir.exists(DIR_FAB)) stop("Falta ", DIR_FAB, ". Bajar el depósito de https
 
 PER <- c("2002-2006", "2006-2010", "2010-2014", "2014-2018", "2018-2022", "2022-2026")
 ARCH_MATRIZ <- c("2002_06", "2006_10", "2010_14", "2014_18", "2018_22", "2022_26")
+PER_TODOS <- c(PER, "2026-2030")
 
 
 # ---------------------------------------------------------------------------
@@ -58,9 +64,14 @@ fab <- read_tsv(file.path(DIR_FAB, "ideologia_congreso_chile_2002_2026_long_form
   filter(!(is.na(wnom) & is.na(bay) & is.na(dyn))) %>%
   mutate(id_parlamentario = if_else(id_parlamentario == "209" & periodo == "2018-2022", "1064", id_parlamentario))
 
+# 2026-2030, solo W-NOMINATE y estimado acá
+w26 <- read_csv(file.path(DIR_OUT, "wnominate_2026_2030.csv"), show_col_types = FALSE,
+                col_types = cols(id_parlamentario = "c"))
+fab <- bind_rows(fab, w26 %>% mutate(periodo = "2026-2030", bay = NA_real_, dyn = NA_real_))
+
 bc <- read_csv("post_bcall_periodos/datos/bcall_periodos.csv", show_col_types = FALSE,
                col_types = cols(id_parlamentario = "c")) %>%
-  filter(periodo %in% PER)
+  filter(periodo %in% PER_TODOS)
 
 cmp <- inner_join(bc, fab, by = c("id_parlamentario", "periodo"))
 cat("diputado x período comparados:", nrow(cmp), "\n")
@@ -123,13 +134,14 @@ corr <- cmp %>%
   group_by(periodo) %>%
   summarise(diputados = n(),
             r_wnom = cor(d1, wnom, use = "complete.obs"),
-            r_bay  = cor(d1, bay,  use = "complete.obs"),
-            r_dyn  = cor(d1, dyn,  use = "complete.obs"),
+            r_bay  = if (all(is.na(bay))) NA_real_ else cor(d1, bay, use = "complete.obs"),
+            r_dyn  = if (all(is.na(dyn))) NA_real_ else cor(d1, dyn, use = "complete.obs"),
             rho_d2_centro = cor(d2, abs(wnom), use = "complete.obs", method = "spearman"),
             topan_wnom = sum(abs(wnom) >= 0.99, na.rm = TRUE),
             .groups = "drop")
 
-resumen <- count(vot_fab, periodo, name = "votaciones_fabrega") %>%
+resumen <- tibble(periodo = PER_TODOS) %>%
+  left_join(count(vot_fab, periodo, name = "votaciones_fabrega"), by = "periodo") %>%
   left_join(count(vot_bc, periodo, name = "votaciones_bcall"), by = "periodo") %>%
   left_join(count(semi_join(vot_fab, vot_bc, by = "id_votacion"), periodo, name = "votaciones_comunes"), by = "periodo") %>%
   left_join(count(solo_vb, periodo, despues_fin_fabrega) %>%
@@ -142,10 +154,10 @@ resumen <- count(vot_fab, periodo, name = "votaciones_fabrega") %>%
 
 print.data.frame(resumen %>% mutate(across(where(is.double), ~ round(.x, 3))), row.names = FALSE)
 cat("\núltima votación de Fábrega:", format(max(semi_join(vot_bc, vot_fab, by = "id_votacion")$fecha)), "\n")
-cat("totales: votaciones comunes", sum(resumen$votaciones_comunes),
-    "| votos iguales", sum(resumen$votos_iguales),
-    "| distintos", sum(resumen$votos_distintos),
-    "| solo un lado", sum(resumen$solo_un_lado),
+cat("totales: votaciones comunes", sum(resumen$votaciones_comunes, na.rm = TRUE),
+    "| votos iguales", sum(resumen$votos_iguales, na.rm = TRUE),
+    "| distintos", sum(resumen$votos_distintos, na.rm = TRUE),
+    "| solo un lado", sum(resumen$solo_un_lado, na.rm = TRUE),
     "| solo B-Call antes", sum(resumen$solo_bcall_antes),
     "| solo B-Call después", sum(resumen$solo_bcall_despues), "\n")
 

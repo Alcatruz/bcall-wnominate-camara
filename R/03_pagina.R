@@ -33,7 +33,7 @@ pagina <- list(
               d1 = round(d1, 3), d2 = round(d2, 3), w = round(wnom, 3), x = extremo_d2_max),
   ext = comparacion %>%
     filter(extremo_d2_max) %>%
-    # ap = primer apellido, para rotular el punto en la Figura 2
+    # ap = primer apellido, para rotular el punto en la Figura 3
     transmute(p = periodo, n = nombre_natural(nombre_completo), pa = replace_na(partido, "IND"),
               ap = str_remove(str_extract(nombre_completo, "^[^,]+"), " (?:(?:Del|De la|De los|De las|De|Van|Von) )?\\S+$"),
               w = round(wnom, 3), d2 = round(d2, 3), cb = round(contra_bloque, 4), ca = round(contra_acuerdo, 4)),

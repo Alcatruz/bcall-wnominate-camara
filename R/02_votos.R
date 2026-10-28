@@ -36,7 +36,7 @@ suppressPackageStartupMessages({
 })
 
 DIR_OUT <- "post_bcall_wnominate/datos"
-PER <- c("2002-2006", "2006-2010", "2010-2014", "2014-2018", "2018-2022", "2022-2026")
+PER <- c("2002-2006", "2006-2010", "2010-2014", "2014-2018", "2018-2022", "2022-2026", "2026-2030")
 
 cmp <- read_csv(file.path(DIR_OUT, "comparacion.csv"), show_col_types = FALSE,
                 col_types = cols(id_parlamentario = "c")) %>%

@@ -141,6 +141,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
 
   <div class="recuadro">
     <p><b>Cómo se compara.</b> De las tres estimaciones de Fábrega, dos se hacen por separado en cada período, W-NOMINATE y un modelo bayesiano de puntos ideales. La tercera es un modelo dinámico que pone los seis períodos en una escala común. Comparo cada una con <span class="var">d1</span> diputado por diputado dentro de cada período, con el identificador de la Cámara. Ninguna correlación mezcla períodos.</p>
+    <p>La base de Fábrega no cubre la Cámara actual. Para incluir lo que va de 2026-2030 estimé W-NOMINATE con su mismo código, sobre las 377 votaciones de proyectos de ley hasta el 9 de septiembre de 2026. Como prueba, ese código aplicado a las votaciones de B-Call de 2022-2026 da una correlación de 0,9995 con su estimación publicada.</p>
   </div>
 
   <h2>Las mismas votaciones</h2>
@@ -153,46 +154,54 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
   <div class="tabla-envoltura">
     <table id="tabla-votos"><thead></thead><tbody></tbody></table>
   </div>
-  <figcaption><b>Tabla 1.</b> Votaciones de proyectos de ley en cada base y votos emitidos (a favor, en contra o abstención) en las votaciones que comparten. En 2022-2026, 733 de las votaciones que solo tiene B-Call son posteriores al 2 de junio de 2025.</figcaption>
+  <figcaption><b>Tabla 1.</b> Votaciones de proyectos de ley en cada base y votos emitidos (a favor, en contra o abstención) en las votaciones que comparten. En 2022-2026, 733 de las votaciones que solo tiene B-Call son posteriores al 2 de junio de 2025. 2026-2030 no aparece porque la base de Fábrega no lo cubre.</figcaption>
 </figure>
 
 <div class="col">
   <h2>La misma posición</h2>
-  <p>La Figura 1 pone <span class="var">d1</span> contra W-NOMINATE en cada período. Los puntos quedan casi sobre una recta. La correlación va de 0,986 a 0,998, y con el modelo bayesiano de 0,979 a 0,996 (Tabla 2). Con cualquiera de los dos, el orden de los diputados de izquierda a derecha es prácticamente el que da B-Call.</p>
+  <p>La Figura 1 pone <span class="var">d1</span> contra W-NOMINATE en cada período. Los puntos quedan casi sobre una recta. La correlación va de 0,986 a 0,998, y con el modelo bayesiano de 0,979 a 0,996 (Tabla 2). En lo que va de 2026-2030, con el W-NOMINATE que estimé, es 0,996. Con cualquiera de los dos, el orden de los diputados de izquierda a derecha es prácticamente el que da B-Call.</p>
 </div>
 
 <figure class="ancho">
   <div class="grafico"><div id="fig-posicion" class="lienzo" role="img" aria-label="d1 de B-Call contra W-NOMINATE de Fábrega, un panel por período"></div></div>
-  <figcaption><b>Figura 1.</b> Posición de cada diputado según W-NOMINATE (Fábrega, 2025b) y según <span class="var">d1</span> de B-Call, por período. El color es el bloque que asigna B-Call. Al pasar el cursor sobre un punto aparecen el nombre, el partido y los dos valores.</figcaption>
+  <figcaption><b>Figura 1.</b> Posición de cada diputado según W-NOMINATE (Fábrega, 2025b) y según <span class="var">d1</span> de B-Call, por período. En 2026-2030, W-NOMINATE estimado con el código de Fábrega sobre las votaciones hasta el 9 de septiembre de 2026. El color es el bloque que asigna B-Call. Al pasar el cursor sobre un punto aparecen el nombre, el partido y los dos valores.</figcaption>
 </figure>
 
 <div class="col">
   <p>Con el modelo dinámico la correlación baja a valores entre 0,902 y 0,953. Es esperable, porque ese modelo no estima cada período por su cuenta y a quienes votan poco los deja cerca de cero. Néstor Jofré, con 163 votos en 2002-2006, tiene 0,55 en W-NOMINATE y −0,09 en el modelo dinámico.</p>
 
-  <p>Lo que queda de diferencia está en los bordes. W-NOMINATE mantiene a cada diputado entre −1 y 1, y en cada período entre 2 y 4 diputados quedan pegados a ese límite. <span class="var">d1</span> no tiene ese techo. Por eso Hugo Gutiérrez queda en −1,37 con B-Call y en −1 con W-NOMINATE en 2010-2014. Y en 2022-2026 los diputados del Partido Nacional Libertario aparecen, en relación con el resto de la sala, más a la derecha con <span class="var">d1</span> que con W-NOMINATE.</p>
+  <p>Lo que queda de diferencia está en los bordes. W-NOMINATE mantiene a cada diputado entre −1 y 1, y en cada período entre 2 y 6 diputados quedan pegados a ese límite. <span class="var">d1</span> no tiene ese techo. Por eso Hugo Gutiérrez queda en −1,37 con B-Call y en −1 con W-NOMINATE en 2010-2014. Y en 2022-2026 los diputados del Partido Nacional Libertario aparecen, en relación con el resto de la sala, más a la derecha con <span class="var">d1</span> que con W-NOMINATE. La Figura 2 compara la forma de las dos distribuciones en cada período, y ahí esas diferencias casi no se notan.</p>
+</div>
+
+<figure class="ancho">
+  <div class="grafico"><div id="fig-densidad" class="lienzo" role="img" aria-label="Densidad de W-NOMINATE y de d1 en cada período, estandarizadas"></div></div>
+  <figcaption><b>Figura 2.</b> Distribución de W-NOMINATE y de <span class="var">d1</span> en cada período. Cada medida se estandariza dentro del período (media 0 y desviación estándar 1) para comparar su forma, y la densidad se estima con un núcleo gaussiano. En todos los períodos las dos curvas casi coinciden.</figcaption>
+</figure>
+
+<div class="col">
 
   <p>Hay también una diferencia en el centro. En 2014-2018 W-NOMINATE ubica a Pedro Browne, Karla Rubilar y Joaquín Godoy en el medio de la sala, entre −0,09 y 0,07. Los tres habían sido diputados de RN en el período anterior y en este la Cámara los registra en Amplitud o como independientes. Con <span class="var">d1</span> quedan en el borde del bloque de derecha, entre 0,28 y 0,43.</p>
 
   <h2>Lo que agrega d2</h2>
-  <p>La Figura 2 pone <span class="var">d2</span> contra W-NOMINATE. En cuatro de los seis períodos los diputados con <span class="var">d2</span> más alto quedan más cerca del centro, con correlaciones entre −0,29 y −0,36 (Tabla 2). La relación tiene que ver con lo que mide <span class="var">d2</span>.</p>
+  <p>La Figura 3 pone <span class="var">d2</span> contra W-NOMINATE. En cinco de los siete períodos los diputados con <span class="var">d2</span> más alto quedan más cerca del centro, con correlaciones entre −0,29 y −0,36, y de −0,63 en lo que va de 2026-2030 (Tabla 2). La relación tiene que ver con lo que mide <span class="var">d2</span>.</p>
 
   <p>B-Call estandariza cada votación y le da signo según el bloque, y <span class="var">d2</span> es la desviación estándar de esos valores para cada diputado. Un diputado de centro que vota siempre según su posición vota unas veces con la derecha y otras con la izquierda. Sus valores cambian de signo, y <span class="var">d2</span> registra ese reparto como dispersión. La correlación de la Tabla 2 es la que se espera de esa medida.</p>
 </div>
 
 <figure class="ancho">
   <div class="grafico"><div id="fig-dispersion" class="lienzo" role="img" aria-label="d2 de B-Call contra W-NOMINATE de Fábrega, un panel por período"></div></div>
-  <figcaption><b>Figura 2.</b> Dispersión del voto (<span class="var">d2</span>) de cada diputado según su posición en W-NOMINATE, por período. Los diputados de centro, que votan unas veces con cada bloque, tienden a tener un <span class="var">d2</span> más alto. En color, el diputado de la Tabla 3 en cada período.</figcaption>
+  <figcaption><b>Figura 3.</b> Dispersión del voto (<span class="var">d2</span>) de cada diputado según su posición en W-NOMINATE, por período. Los diputados de centro, que votan unas veces con cada bloque, tienden a tener un <span class="var">d2</span> más alto. En color, el diputado de la Tabla 3 en cada período.</figcaption>
 </figure>
 
 <figure class="ancho">
   <div class="tabla-envoltura">
     <table id="tabla-corr"><thead></thead><tbody></tbody></table>
   </div>
-  <figcaption><b>Tabla 2.</b> Correlación de Pearson entre <span class="var">d1</span> y cada estimación de Fábrega, y correlación de Spearman entre <span class="var">d2</span> y la distancia al centro de W-NOMINATE, por período. Un valor negativo en la última columna indica que los diputados más dispersos quedan más cerca del centro, donde los votos se reparten entre los bloques.</figcaption>
+  <figcaption><b>Tabla 2.</b> Correlación de Pearson entre <span class="var">d1</span> y cada estimación de Fábrega, y correlación de Spearman entre <span class="var">d2</span> y la distancia al centro de W-NOMINATE, por período. Un valor negativo en la última columna indica que los diputados más dispersos quedan más cerca del centro, donde los votos se reparten entre los bloques. En 2026-2030 solo hay W-NOMINATE, estimado con el código de Fábrega.</figcaption>
 </figure>
 
 <div class="col">
-  <p>En los extremos, un <span class="var">d2</span> alto marca otra cosa. La Tabla 3 muestra, en cada período, al diputado con el <span class="var">d2</span> más alto dentro de la cuarta parte más extrema de W-NOMINATE. Los seis se apartan de la mayoría de su bloque más que la mediana de la Cámara, y entre el 72% y el 98% de esas veces lo hacen en votaciones en que los dos bloques votaron igual. En la mediana de la Cámara, esa proporción va de 43% a 62%.</p>
+  <p>En los extremos, un <span class="var">d2</span> alto marca otra cosa. La Tabla 3 muestra, en cada período, al diputado con el <span class="var">d2</span> más alto dentro de la cuarta parte más extrema de W-NOMINATE. Los siete se apartan de la mayoría de su bloque más que la mediana de la Cámara, y entre el 72% y el 98% de esas veces lo hacen en votaciones en que los dos bloques votaron igual. En la mediana de la Cámara, esa proporción va de 43% a 62%.</p>
 </div>
 
 <figure class="ancho">
@@ -206,7 +215,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
   <h2>Voto por voto</h2>
   <p>Hugo Gutiérrez, del PC, es el caso más claro. En 2010-2014 se apartó de su bloque en el 20,5% de las votaciones, y en el 98% de esos casos la izquierda y la derecha estaban de acuerdo. W-NOMINATE lo deja en −1, el tope de su escala, y <span class="var">d1</span> también lo empuja hacia afuera. Lo que solo <span class="var">d2</span> registra es que ese borde se arma votando contra acuerdos de toda la sala.</p>
 
-  <p>La Figura 3 permite verlo votación por votación, para cualquier diputado y en cualquiera de las seis Cámaras. Cada punto gris es una votación de proyecto de ley en que los dos bloques tuvieron una mayoría definida, ubicada según el porcentaje de cada bloque que votó a favor. Arriba a la derecha quedan los acuerdos a favor y abajo a la izquierda los acuerdos en contra. En naranja aparecen las votaciones en que el diputado elegido no votó con su bloque, y abajo, mes a mes, qué parte de sus votos fueron así.</p>
+  <p>La Figura 4 permite verlo votación por votación, para cualquier diputado y en cualquiera de las siete Cámaras, incluida la actual. Cada punto gris es una votación de proyecto de ley en que los dos bloques tuvieron una mayoría definida, ubicada según el porcentaje de cada bloque que votó a favor. Arriba a la derecha quedan los acuerdos a favor y abajo a la izquierda los acuerdos en contra. En naranja aparecen las votaciones en que el diputado elegido no votó con su bloque, y abajo, mes a mes, qué parte de sus votos fueron así.</p>
 
   <p>Esos puntos naranjos son la dispersión que mide <span class="var">d2</span>. B-Call la calcula con los votos del propio diputado, como la desviación estándar de sus votos ya estandarizados. Mientras vota con su bloque, sus valores van en la misma dirección. Cada vez que se aparta, el valor cambia de signo, y si se aparta de un acuerdo de toda la sala el valor además es grande, porque queda en una minoría chica. Un <span class="var">d2</span> alto es un diputado con muchos puntos naranjos, y la figura muestra dónde y cuándo están.</p>
 
@@ -224,13 +233,13 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
     <div id="fig-meses" class="lienzo" role="img" aria-label="Porcentaje mensual de votos del diputado elegido que se apartaron de su bloque"></div>
     <p class="cifra" id="cifra-votos"></p>
   </div>
-  <figcaption><b>Figura 3.</b> Arriba, las votaciones de proyectos de ley del período según el porcentaje a favor en el bloque de izquierda (eje horizontal) y en el de derecha (eje vertical), entre quienes votaron a favor o en contra. En naranja, las votaciones en que el diputado elegido no votó con la mayoría de su bloque, con una forma distinta según votó en contra, se abstuvo o votó a favor. Abajo, por mes, el porcentaje de sus votos que se apartó del bloque, en votaciones divididas y en acuerdos de ambos bloques, junto a la mediana de su bloque. Solo meses en que votó al menos cinco veces. Los puntos llevan un pequeño desplazamiento al azar para que no se tapen, y al pasar el cursor aparece el proyecto.</figcaption>
+  <figcaption><b>Figura 4.</b> Arriba, las votaciones de proyectos de ley del período según el porcentaje a favor en el bloque de izquierda (eje horizontal) y en el de derecha (eje vertical), entre quienes votaron a favor o en contra. En naranja, las votaciones en que el diputado elegido no votó con la mayoría de su bloque, con una forma distinta según votó en contra, se abstuvo o votó a favor. Abajo, por mes, el porcentaje de sus votos que se apartó del bloque, en votaciones divididas y en acuerdos de ambos bloques, junto a la mediana de su bloque. Solo meses en que votó al menos cinco veces. Los puntos llevan un pequeño desplazamiento al azar para que no se tapen, y al pasar el cursor aparece el proyecto.</figcaption>
 </figure>
 
 <div class="col">
   <p>No era una conducta solo suya. Los tres diputados del PC hacen lo mismo con distinta intensidad. Gutiérrez se apartó en el 36% de las votaciones con acuerdo en que votó, Lautaro Carmona en el 26% y Guillermo Teillier en el 20%. Alfonso De Urresti, del PS, el diputado de la izquierda con el <span class="var">d2</span> más cercano a la mediana de su bloque, lo hizo en el 13%.</p>
 
-  <p>Comparar Cámaras ayuda a leerlo, porque el mismo diputado cambia de un período a otro. Kast se apartó de la derecha en el 1,3% de las votaciones de 2010-2014, con su <span class="var">d2</span> en el percentil 12 de la sala, y en el 11,1% en 2014-2018, con el percentil 96. Boric pasó del 25,3% en 2014-2018 al 9,9% en 2018-2022, y su <span class="var">d2</span> del percentil 100 al 78. Gutiérrez bajó del 20,5% en 2010-2014 al 9,1% en 2014-2018, con la izquierda en el gobierno, y su <span class="var">d2</span> del percentil 98 al 71. Los botones de la figura llevan a cada uno de esos casos.</p>
+  <p>Comparar Cámaras ayuda a leerlo, porque el mismo diputado cambia de un período a otro. Kast se apartó de la derecha en el 1,3% de las votaciones de 2010-2014, con su <span class="var">d2</span> en el percentil 12 de la sala, y en el 11,1% en 2014-2018, con el percentil 96. Boric pasó del 25,3% en 2014-2018 al 9,9% en 2018-2022, y su <span class="var">d2</span> del percentil 100 al 78. Gutiérrez bajó del 20,5% en 2010-2014 al 9,1% en 2014-2018, con la izquierda en el gobierno, y su <span class="var">d2</span> del percentil 98 al 71. La Cámara actual repite el patrón con el cambio de gobierno. Daniela Serrano, del PC, se apartó de la izquierda en el 6,2% de las votaciones de 2022-2026, con su <span class="var">d2</span> en el percentil 3, y en el 10,5% en lo que va de 2026-2030, con el percentil 93. Chiara Barchiesi, republicana, hizo el camino inverso, del 20,3% y el percentil 87 al 3,1% y el percentil 1. Los botones de la figura llevan a cada uno de esos casos.</p>
 
   <p>En 2014-2018 la correlación de la Tabla 2 incluso se invierte (0,20), porque cuatro de los cinco diputados con <span class="var">d2</span> más alto estaban del lado izquierdo, entre −0,79 y −0,97 en W-NOMINATE. Boric era uno de ellos. Es la Cámara de <a href="https://alcatruz.github.io/boric-kast-camara/">Los dos extremos</a>.</p>
 
@@ -245,11 +254,12 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
   <ul class="notas">
     <li>La base de Fábrega se bajó de Harvard Dataverse (versión 2.0) el 27 de octubre de 2026. Uso las columnas <code>wnom_ideology</code>, <code>bay_ideology</code> y <code>dim_ideology</code> de su archivo en formato largo y las seis matrices de votación.</li>
     <li>El artículo presenta la primera estimación como DW-NOMINATE. En el script de replicación (<code>A_Ideology_Estimation.R</code>) se estima con W-NOMINATE, por separado en cada período y en una dimensión, y así la llamo acá.</li>
+    <li>La base de Fábrega no cubre 2026-2030. Para ese período estimé W-NOMINATE con la especificación de su script, en una dimensión y con los valores por defecto del paquete, sobre los votos de la base de B-Call hasta el 9 de septiembre de 2026 (<code>R/00_wnominate_2026.R</code>). Ninguna de sus anclas de polaridad es diputado en ese período, así que usé a Jorge Alessandri, el mismo ancla de B-Call. Con ese código y los votos de B-Call de 2022-2026, la correlación con su W-NOMINATE publicado es 0,9995. Agregué este período el 28 de octubre de 2026.</li>
     <li>Las estimaciones de B-Call son las del <a href="https://alcatruz.github.io/bcall-camara-2002-2026/">análisis anterior</a>, sobre las votaciones de proyectos de ley con número de boletín de opendata.camara.cl. A favor 1, en contra −1, abstención 0. Pareos, dispensas y ausencias quedan como dato faltante.</li>
     <li>Para comparar votos, Afirmativo, En Contra y Abstención de las matrices de Fábrega se cruzan con a favor, en contra y abstención. Dispensado, No Vota y las celdas vacías cuentan como sin voto. Los 1.861.669 votos son las celdas de diputado y votación con voto en las dos bases.</li>
     <li>Pablo Prieto figura en la base de Fábrega con el identificador 209 también en 2018-2022, donde la Cámara usa el 1064. Lo recodifiqué para incluirlo.</li>
     <li>El lado de un bloque en una votación es la opción, a favor o en contra, que eligió la mayoría de sus miembros. Si empatan, la votación no cuenta. Apartarse del bloque incluye abstenerse.</li>
-    <li>Alfonso De Urresti es el diputado de la izquierda, del PS o el PPD, con el <span class="var">d2</span> más cercano a la mediana de su bloque en 2010-2014. Los títulos de los proyectos vienen de tramitacion.senado.cl. Los votos de cada período que usa la Figura 3 están en <code>datos/votos_*.json</code> y los arma <code>R/02_votos.R</code>.</li>
+    <li>Alfonso De Urresti es el diputado de la izquierda, del PS o el PPD, con el <span class="var">d2</span> más cercano a la mediana de su bloque en 2010-2014. Los títulos de los proyectos vienen de tramitacion.senado.cl. Los votos de cada período que usa la Figura 4 están en <code>datos/votos_*.json</code> y los arma <code>R/02_votos.R</code>.</li>
     <li>Una primera versión de este texto, del 27 de octubre de 2026, leía la correlación entre <span class="var">d2</span> y la cercanía al centro como apoyo al argumento de B-Call. Esa correlación es la que se espera de cómo se calcula <span class="var">d2</span>, y corregí el texto el 28 de octubre.</li>
     <li>El código y los datos están en el <a href="https://github.com/Alcatruz/bcall-wnominate-camara">repositorio</a>. Los archivos que contienen estimaciones de Fábrega (<code>datos/comparacion.csv</code> y <code>datos/datos.js</code>) se distribuyen con su misma licencia, CC BY-NC-SA 4.0.</li>
   </ul>
@@ -273,8 +283,10 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
   var D = window.BW;
   if (!D) return;
 
-  var PER = ["2002-2006", "2006-2010", "2010-2014", "2014-2018", "2018-2022", "2022-2026"];
-  function num(x, d) { return x.toLocaleString("es-CL", { minimumFractionDigits: d, maximumFractionDigits: d }).replace("-", "−"); }
+  var PER = ["2002-2006", "2006-2010", "2010-2014", "2014-2018", "2018-2022", "2022-2026", "2026-2030"];
+  // la base de Fábrega no cubre 2026-2030; ahí el W-NOMINATE es propio
+  var PER_FAB = PER.slice(0, 6);
+  function num(x, d) { if (x === null || x === undefined) return "—"; return x.toLocaleString("es-CL", { minimumFractionDigits: d, maximumFractionDigits: d }).replace("-", "−"); }
   function ent(x) { return x.toLocaleString("es-CL"); }
   function corto(p) { return p.slice(2, 4) + "-" + p.slice(7, 9); }
   function fila(p) { return D.per.filter(function (r) { return r.periodo === p; })[0]; }
@@ -286,12 +298,12 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
       ? ["Período", "Fábrega", "B-Call", "Comunes", "Votos iguales", "Distintos"]
       : ["Período", "Votaciones de Fábrega", "Votaciones de B-Call", "Votaciones comunes", "Votos que coinciden", "Votos distintos"];
     document.querySelector("#tabla-votos thead").innerHTML = "<tr>" + t1.map(function (h) { return "<th>" + h + "</th>"; }).join("") + "</tr>";
-    var filas = PER.map(function (p) {
+    var filas = PER_FAB.map(function (p) {
       var r = fila(p);
       return [angosto ? corto(p) : p, ent(r.votaciones_fabrega), ent(r.votaciones_bcall), ent(r.votaciones_comunes), ent(r.votos_iguales), ent(r.votos_distintos)];
     });
     var tot = ["votaciones_fabrega", "votaciones_bcall", "votaciones_comunes", "votos_iguales", "votos_distintos"].map(function (k) {
-      return ent(D.per.reduce(function (s, r) { return s + r[k]; }, 0));
+      return ent(PER_FAB.reduce(function (s, p) { return s + fila(p)[k]; }, 0));
     });
     filas.push(["Total"].concat(tot));
     document.querySelector("#tabla-votos tbody").innerHTML = filas.map(function (f, i) {
@@ -332,19 +344,20 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
   }
   function ancho(id) { return document.getElementById(id).clientWidth; }
 
-  // Seis paneles, uno por período, con los mismos ejes ------------------------
+  // Siete paneles, uno por período, con los mismos ejes -----------------------
   function paneles(id, T, cfg) {
-    var cols = ancho(id) < 600 ? 2 : 3, filas = PER.length / cols;
-    var gx = 0.06, gy = cols === 2 ? 0.07 : 0.12;
+    var cols = ancho(id) < 600 ? 2 : 4, filas = Math.ceil(PER.length / cols);
+    var gx = 0.06, gy = cols === 2 ? 0.06 : 0.14;
     var w = (1 - gx * (cols - 1)) / cols, h = (1 - gy * (filas - 1)) / filas;
-    var alto = cols === 2 ? 760 : 560, mt = 64, mb = 52;
+    var alto = cols === 2 ? 940 : 500, mt = 28, mb = 52;
+    // la leyenda va en el casillero que queda libre después del último panel
+    var cl = PER.length % cols, fl = Math.floor(PER.length / cols);
     var data = [], layout = {
       paper_bgcolor: T.surface, plot_bgcolor: T.surface, showlegend: true,
       font: { family: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif', size: 11, color: T.ink2 },
       separators: ",.", height: alto, margin: { l: 52, r: 12, t: mt, b: mb },
       hoverlabel: { bgcolor: T.surface, bordercolor: T.axis, font: { color: T.ink, size: 13 } },
-      // la leyenda va sobre los títulos de los paneles de la primera fila
-      legend: { orientation: "h", x: 0, xanchor: "left", y: 1 + 24 / (alto - mt - mb), yanchor: "bottom", font: { color: T.ink2, size: 12 } },
+      legend: { orientation: "v", x: cl * (w + gx) + 0.01, xanchor: "left", y: 1 - fl * (h + gy) - 0.02, yanchor: "top", font: { color: T.ink2, size: 12 } },
       dragmode: false, annotations: []
     };
     PER.forEach(function (p, i) {
@@ -355,7 +368,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
         title: f === filas - 1 ? { text: cfg.xt, font: { color: T.ink2, size: 11 } } : undefined });
       layout["yaxis" + k] = Object.assign({}, ejeBase, { domain: [y1 - h, y1], anchor: "x" + k, range: cfg.yr, dtick: cfg.yd,
         title: c === 0 ? { text: cfg.yt, font: { color: T.ink2, size: 11 } } : undefined });
-      layout.annotations.push({ text: "<b>" + p + "</b>", xref: "x" + k + " domain", yref: "y" + k + " domain", x: 0, y: 1,
+      layout.annotations.push({ text: "<b>" + p + "</b>" + (PER_FAB.indexOf(p) < 0 ? " · parcial" : ""), xref: "x" + k + " domain", yref: "y" + k + " domain", x: 0, y: 1,
         xanchor: "left", yanchor: "bottom", yshift: 2, showarrow: false, font: { color: T.ink, size: 12 } });
       [["left", "Bloque de izquierda", T.izq], ["right", "Bloque de derecha", T.der]].forEach(function (b) {
         var pts = D.dip.filter(function (d) { return d.p === p && d.b === b[0] && d.w !== null; });
@@ -364,7 +377,8 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
           xaxis: "x" + k, yaxis: "y" + k,
           x: pts.map(function (d) { return d[cfg.x]; }), y: pts.map(function (d) { return d[cfg.y]; }),
           customdata: pts.map(function (d) { return [d.n, d.pa, num(d.w, 2), num(d.d1, 2), num(d.d2, 2)]; }),
-          hovertemplate: "<b>%{customdata[0]}</b> · %{customdata[1]}<br>W-NOMINATE %{customdata[2]}<br>d1 %{customdata[3]} · d2 %{customdata[4]}<extra>" + p + "</extra>",
+          hovertemplate: "<b>%{customdata[0]}</b> · %{customdata[1]}<br>W-NOMINATE" + (PER_FAB.indexOf(p) < 0 ? " (estimación propia)" : "") +
+            " %{customdata[2]}<br>d1 %{customdata[3]} · d2 %{customdata[4]}<extra>" + p + "</extra>",
           marker: { size: 6, color: b[2], opacity: 0.85, line: { color: T.surface, width: 0.5 } }
         });
       });
@@ -382,14 +396,73 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
     Plotly.react(id, data, layout, CONFIG);
   }
 
-  // Figura 3, voto por voto ---------------------------------------------------
+  // Figura 2, la forma de las dos distribuciones ------------------------------
+  function alfa(hex, a) {
+    var h = hex.replace("#", "");
+    if (h.length === 3) h = h.replace(/(.)/g, "$1$1");
+    var n = parseInt(h, 16);
+    return "rgba(" + (n >> 16 & 255) + "," + (n >> 8 & 255) + "," + (n & 255) + "," + a + ")";
+  }
+  function estandarizar(v) {
+    var n = v.length, m = v.reduce(function (s, x) { return s + x; }, 0) / n;
+    var sd = Math.sqrt(v.reduce(function (s, x) { return s + (x - m) * (x - m); }, 0) / (n - 1));
+    return v.map(function (x) { return (x - m) / sd; });
+  }
+  // núcleo gaussiano con el ancho de banda de Silverman
+  function densidad(v, xs) {
+    var n = v.length, o = v.slice().sort(function (a, b) { return a - b; });
+    var m = v.reduce(function (s, x) { return s + x; }, 0) / n;
+    var sd = Math.sqrt(v.reduce(function (s, x) { return s + (x - m) * (x - m); }, 0) / (n - 1));
+    var iqr = o[Math.floor(0.75 * (n - 1))] - o[Math.floor(0.25 * (n - 1))];
+    var h = 0.9 * Math.min(sd, iqr > 0 ? iqr / 1.34 : sd) * Math.pow(n, -0.2);
+    return xs.map(function (x) {
+      var s = 0;
+      for (var i = 0; i < n; i++) { var z = (x - v[i]) / h; s += Math.exp(-0.5 * z * z); }
+      return s / (n * h * Math.sqrt(2 * Math.PI));
+    });
+  }
+  function figDensidad(T) {
+    var xs = [], n = PER.length, ALTO = 1.35;
+    for (var k = 0; k <= 200; k++) xs.push(-3.2 + 6.4 * k / 200);
+    var data = [];
+    PER.forEach(function (p, i) {
+      var pts = D.dip.filter(function (d) { return d.p === p && d.w !== null; });
+      var fw = densidad(estandarizar(pts.map(function (d) { return d.w; })), xs);
+      var fd = densidad(estandarizar(pts.map(function (d) { return d.d1; })), xs);
+      var mx = Math.max(Math.max.apply(null, fw), Math.max.apply(null, fd)), b = n - 1 - i;
+      var yw = fw.map(function (f) { return b + ALTO * f / mx; }), yd = fd.map(function (f) { return b + ALTO * f / mx; });
+      var cx = xs.concat([xs[xs.length - 1], xs[0]]);
+      // fondo opaco, para que cada período tape al de arriba
+      data.push({ type: "scatter", mode: "lines", x: cx, y: yw.map(function (y, j) { return Math.max(y, yd[j]); }).concat([b, b]),
+        fill: "toself", fillcolor: T.surface, line: { width: 0 }, hoverinfo: "skip", showlegend: false });
+      data.push({ type: "scatter", mode: "lines", name: "W-NOMINATE", legendgroup: "w", showlegend: i === 0, x: cx, y: yw.concat([b, b]),
+        fill: "toself", fillcolor: alfa(T.neutro, 0.6), line: { color: T.muted, width: 1 }, hoverinfo: "skip" });
+      data.push({ type: "scatter", mode: "lines", name: "d1 de B-Call", legendgroup: "d", showlegend: i === 0, x: xs,
+        y: fd.map(function (f, j) { return f < 0.004 * mx ? null : yd[j]; }), line: { color: T.ink, width: 1.8 }, hoverinfo: "skip" });
+    });
+    var angosto = ancho("fig-densidad") < 560;
+    Plotly.react("fig-densidad", data, {
+      paper_bgcolor: T.surface, plot_bgcolor: T.surface, separators: ",.",
+      font: { family: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif', size: 11, color: T.ink2 },
+      height: angosto ? 520 : 500, margin: { l: angosto ? 44 : 78, r: 12, t: 36, b: 52 }, dragmode: false,
+      legend: { orientation: "h", x: 0, xanchor: "left", y: 1.02, yanchor: "bottom", font: { color: T.ink2, size: 12 } },
+      xaxis: { range: [-3.2, 3.2], dtick: 1, gridcolor: T.grid, linecolor: T.axis, zeroline: false, fixedrange: true, tickfont: { color: T.muted },
+               title: { text: "Desviaciones estándar desde la media del período", font: { color: T.ink2, size: 12 } } },
+      yaxis: { range: [-0.15, n - 1 + ALTO + 0.05], tickvals: PER.map(function (p, i) { return n - 1 - i; }),
+               ticktext: PER.map(function (p) { return angosto ? corto(p) : p; }), showgrid: false, zeroline: false, fixedrange: true,
+               tickfont: { color: T.ink2 } }
+    }, CONFIG);
+  }
+
+  // Figura 4, voto por voto ---------------------------------------------------
   // los votos de cada período se cargan aparte, desde datos/votos_<período>.json
   var VOTOS = {}, est = { p: "2010-2014", id: "937" };
   var CASOS = [
     ["2010-2014", "937", "Gutiérrez 2010-14"], ["2014-2018", "937", "Gutiérrez 2014-18"],
     ["2014-2018", "972", "Boric 2014-18"], ["2018-2022", "972", "Boric 2018-22"],
     ["2010-2014", "857", "Kast 2010-14"], ["2014-2018", "857", "Kast 2014-18"],
-    ["2022-2026", "1123", "De la Carrera 2022-26"]
+    ["2022-2026", "1173", "Serrano 2022-26"], ["2026-2030", "1173", "Serrano 2026-30"],
+    ["2022-2026", "1104", "Barchiesi 2022-26"], ["2026-2030", "1104", "Barchiesi 2026-30"]
   ];
   var selPer = document.getElementById("sel-per"), selDip = document.getElementById("sel-dip");
   selPer.innerHTML = PER.map(function (p) { return '<option value="' + p + '">' + p + "</option>"; }).join("");
@@ -523,6 +596,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
     var T = tok();
     figVotos(T);
     paneles("fig-posicion", T, { x: "w", y: "d1", xt: "W-NOMINATE", yt: "d1", xr: [-1.1, 1.1], xd: 0.5, yr: [-1.5, 1.3], yd: 0.5 });
+    figDensidad(T);
     paneles("fig-dispersion", T, { x: "w", y: "d2", xt: "W-NOMINATE", yt: "d2", xr: [-1.1, 1.1], xd: 0.5, yr: [0.2, 2.35], yd: 0.5, marcar: true });
   }
   todo();
