@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Medir dos veces</title>
-<meta name="description" content="B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Lo que B-Call agrega es d2, que muestra cómo se reparten los votos de cada diputado entre los dos bloques.">
+<meta name="description" content="B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Lo que B-Call agrega es d2, que mide cuán volátil es el voto de cada diputado respecto de su bloque.">
 <meta name="author" content="Daniel Alcatruz">
 <meta property="og:title" content="Medir dos veces">
-<meta property="og:description" content="B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Lo que B-Call agrega es d2, que muestra cómo se reparten los votos de cada diputado entre los dos bloques.">
+<meta property="og:description" content="B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Lo que B-Call agrega es d2, que mide cuán volátil es el voto de cada diputado respecto de su bloque.">
 <meta property="og:type" content="article">
 <style>
 :root {
@@ -129,7 +129,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
 <header class="cabecera col">
   <p class="antetitulo">Comportamiento legislativo · Chile</p>
   <h1>Medir dos veces</h1>
-  <p class="bajada">B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Lo que B-Call agrega es d2, que muestra cómo se reparten los votos de cada diputado entre los dos bloques.</p>
+  <p class="bajada">B-Call y las estimaciones de Fábrega (2025) ubican a los diputados chilenos en el mismo lugar. Lo que B-Call agrega es d2, que mide cuán volátil es el voto de cada diputado respecto de su bloque.</p>
   <p class="firma"><a href="https://github.com/Alcatruz">Daniel Alcatruz</a> · 27 de octubre de 2026</p>
 </header>
 
@@ -137,7 +137,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
 <div class="col">
   <p>En 2025 Jorge Fábrega publicó en <i>Data in Brief</i> una base con la posición ideológica de los diputados chilenos entre 2002 y 2026 (Fábrega, 2025a). Para cada diputado y período trae tres estimaciones, y junto a ellas las matrices de votación con que se hicieron y el código para replicarlas (Fábrega, 2025b). Que todo esté abierto permite poner dos mediciones de la misma Cámara una al lado de la otra.</p>
 
-  <p>La otra medición es B-Call, que separa dos cosas, la posición de un diputado, <span class="var">d1</span>, y la dispersión de sus votos alrededor de ella, <span class="var">d2</span> (Toro-Maureira et al., 2025). Hace unos días publiqué sus <a href="https://alcatruz.github.io/bcall-camara-2002-2026/">estimaciones por período legislativo</a>. ¿Llegan las dos al mismo lugar? Si lo hacen, la posición de los diputados está bien resuelta y lo que B-Call agrega hay que buscarlo en <span class="var">d2</span>.</p>
+  <p>La otra medición es B-Call, que separa dos cosas, la posición de un diputado, <span class="var">d1</span>, y la volatilidad de su voto, <span class="var">d2</span>, que mide cuánto se dispersan sus votos alrededor de esa posición (Toro-Maureira et al., 2025). Hace unos días publiqué sus <a href="https://alcatruz.github.io/bcall-camara-2002-2026/">estimaciones por período legislativo</a>. ¿Llegan las dos al mismo lugar? Si lo hacen, la posición de los diputados está bien resuelta y lo que B-Call agrega hay que buscarlo en <span class="var">d2</span>.</p>
 
   <div class="recuadro">
     <p><b>Cómo se compara.</b> De las tres estimaciones de Fábrega, dos se hacen por separado en cada período, W-NOMINATE y un modelo bayesiano de puntos ideales. La tercera es un modelo dinámico que pone los seis períodos en una escala común. Comparo cada una con <span class="var">d1</span> diputado por diputado dentro de cada período, con el identificador de la Cámara. Ninguna correlación mezcla períodos.</p>
@@ -183,25 +183,25 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
   <p>Hay también una diferencia en el centro. En 2014-2018 W-NOMINATE ubica a Pedro Browne, Karla Rubilar y Joaquín Godoy en el medio de la sala, entre −0,09 y 0,07. Los tres habían sido diputados de RN en el período anterior y en este la Cámara los registra en Amplitud o como independientes. Con <span class="var">d1</span> quedan en el borde del bloque de derecha, entre 0,28 y 0,43.</p>
 
   <h2>Lo que agrega d2</h2>
-  <p>La Figura 3 pone <span class="var">d2</span> contra W-NOMINATE. En cinco de los siete períodos los diputados con <span class="var">d2</span> más alto quedan más cerca del centro, con correlaciones entre −0,29 y −0,36, y de −0,63 en lo que va de 2026-2030 (Tabla 2). La relación tiene que ver con lo que mide <span class="var">d2</span>.</p>
+  <p><span class="var">d2</span> mide la volatilidad del voto. B-Call estandariza cada votación y le da signo según el bloque, y <span class="var">d2</span> es la desviación estándar de esos valores para cada diputado. Quien vota siempre con su bloque tiene valores que van en la misma dirección y un <span class="var">d2</span> bajo. Quien unas veces vota con su bloque y otras no tiene valores que cambian de signo y un <span class="var">d2</span> alto.</p>
 
-  <p>B-Call estandariza cada votación y le da signo según el bloque, y <span class="var">d2</span> es la desviación estándar de esos valores para cada diputado. Un diputado de centro que vota siempre según su posición vota unas veces con la derecha y otras con la izquierda. Sus valores cambian de signo, y <span class="var">d2</span> registra ese reparto como dispersión. La correlación de la Tabla 2 es la que se espera de esa medida.</p>
+  <p>La Figura 3 pone <span class="var">d2</span> contra W-NOMINATE. En cinco de los siete períodos los diputados más volátiles quedan más cerca del centro, con correlaciones entre −0,29 y −0,36, y de −0,63 en lo que va de 2026-2030 (Tabla 2). En el centro, <span class="var">d2</span> recoge a quienes votan unas veces con la derecha y otras con la izquierda, sea porque cambian de lado o porque su posición queda entre los dos bloques. La correlación de la Tabla 2 sale de ahí.</p>
 </div>
 
 <figure class="ancho">
   <div class="grafico"><div id="fig-dispersion" class="lienzo" role="img" aria-label="d2 de B-Call contra W-NOMINATE de Fábrega, un panel por período"></div></div>
-  <figcaption><b>Figura 3.</b> Dispersión del voto (<span class="var">d2</span>) de cada diputado según su posición en W-NOMINATE, por período. Los diputados de centro, que votan unas veces con cada bloque, tienden a tener un <span class="var">d2</span> más alto. En color, el diputado de la Tabla 3 en cada período.</figcaption>
+  <figcaption><b>Figura 3.</b> Volatilidad del voto (<span class="var">d2</span>) de cada diputado según su posición en W-NOMINATE, por período. Los diputados de centro, que votan unas veces con cada bloque, tienden a tener un <span class="var">d2</span> más alto. En color, el diputado de la Tabla 3 en cada período.</figcaption>
 </figure>
 
 <figure class="ancho">
   <div class="tabla-envoltura">
     <table id="tabla-corr"><thead></thead><tbody></tbody></table>
   </div>
-  <figcaption><b>Tabla 2.</b> Correlación de Pearson entre <span class="var">d1</span> y cada estimación de Fábrega, y correlación de Spearman entre <span class="var">d2</span> y la distancia al centro de W-NOMINATE, por período. Un valor negativo en la última columna indica que los diputados más dispersos quedan más cerca del centro, donde los votos se reparten entre los bloques. En 2026-2030 solo hay W-NOMINATE, estimado con el código de Fábrega.</figcaption>
+  <figcaption><b>Tabla 2.</b> Correlación de Pearson entre <span class="var">d1</span> y cada estimación de Fábrega, y correlación de Spearman entre <span class="var">d2</span> y la distancia al centro de W-NOMINATE, por período. Un valor negativo en la última columna indica que los diputados más volátiles quedan más cerca del centro, donde los votos se reparten entre los bloques. En 2026-2030 solo hay W-NOMINATE, estimado con el código de Fábrega.</figcaption>
 </figure>
 
 <div class="col">
-  <p>En los extremos, un <span class="var">d2</span> alto marca otra cosa. La Tabla 3 muestra, en cada período, al diputado con el <span class="var">d2</span> más alto dentro de la cuarta parte más extrema de W-NOMINATE. Los siete se apartan de la mayoría de su bloque más que la mediana de la Cámara, y entre el 72% y el 98% de esas veces lo hacen en votaciones en que los dos bloques votaron igual. En la mediana de la Cámara, esa proporción va de 43% a 62%.</p>
+  <p>En los extremos la volatilidad toma otra forma. La Tabla 3 muestra, en cada período, al diputado con el <span class="var">d2</span> más alto dentro de la cuarta parte más extrema de W-NOMINATE. Los siete se apartan de la mayoría de su bloque más que la mediana de la Cámara, y entre el 72% y el 98% de esas veces lo hacen en votaciones en que los dos bloques votaron igual. En la mediana de la Cámara, esa proporción va de 43% a 62%.</p>
 </div>
 
 <figure class="ancho">
@@ -213,11 +213,11 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
 
 <div class="col">
   <h2>Voto por voto</h2>
-  <p>Hugo Gutiérrez, del PC, es el caso más claro. En 2010-2014 se apartó de su bloque en el 20,5% de las votaciones, y en el 98% de esos casos la izquierda y la derecha estaban de acuerdo. W-NOMINATE lo deja en −1, el tope de su escala, y <span class="var">d1</span> también lo empuja hacia afuera. Lo que solo <span class="var">d2</span> registra es que ese borde se arma votando contra acuerdos de toda la sala.</p>
+  <p>Hugo Gutiérrez, del PC, es el caso más claro. En 2010-2014 se apartó de su bloque en el 20,5% de las votaciones, y en el 98% de esos casos la izquierda y la derecha estaban de acuerdo. W-NOMINATE lo deja en −1, el tope de su escala, y <span class="var">d1</span> también lo empuja hacia afuera. Lo que solo <span class="var">d2</span> registra es que su voto es volátil, y que ese borde se arma votando contra acuerdos de toda la sala.</p>
 
   <p>La Figura 4 permite verlo votación por votación, para cualquier diputado y en cualquiera de las siete Cámaras, incluida la actual. Cada punto gris es una votación de proyecto de ley en que los dos bloques tuvieron una mayoría definida, ubicada según el porcentaje de cada bloque que votó a favor. Arriba a la derecha quedan los acuerdos a favor y abajo a la izquierda los acuerdos en contra. En naranja aparecen las votaciones en que el diputado elegido no votó con su bloque, y abajo, mes a mes, qué parte de sus votos fueron así.</p>
 
-  <p>Esos puntos naranjos son la dispersión que mide <span class="var">d2</span>. B-Call la calcula con los votos del propio diputado, como la desviación estándar de sus votos ya estandarizados. Mientras vota con su bloque, sus valores van en la misma dirección. Cada vez que se aparta, el valor cambia de signo, y si se aparta de un acuerdo de toda la sala el valor además es grande, porque queda en una minoría chica. Un <span class="var">d2</span> alto es un diputado con muchos puntos naranjos, y la figura muestra dónde y cuándo están.</p>
+  <p>Esos puntos naranjos son la volatilidad que mide <span class="var">d2</span>. B-Call la calcula con los votos del propio diputado, como la desviación estándar de sus votos ya estandarizados. Mientras vota con su bloque, sus valores van en la misma dirección. Cada vez que se aparta, el valor cambia de signo, y si se aparta de un acuerdo de toda la sala el valor además es grande, porque queda en una minoría chica. Un diputado volátil, con un <span class="var">d2</span> alto, tiene muchos puntos naranjos, y la figura muestra dónde y cuándo están.</p>
 
   <p>En 2010-2014 hubo 3.088 votaciones de ese tipo. De las 1.272 con acuerdo de ambos bloques en que votó, Gutiérrez se apartó en 456, casi siempre votando en contra (277) o absteniéndose (171). De ellas, 94 fueron votaciones de las leyes de presupuestos de 2011 a 2014. Entre las demás están la ley de lobby, el proyecto sobre sustentabilidad de los recursos hidrobiológicos y acceso a la pesca, y el registro de condenados por delitos sexuales contra menores.</p>
 </div>
@@ -239,14 +239,14 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
 <div class="col">
   <p>No era una conducta solo suya. Los tres diputados del PC hacen lo mismo con distinta intensidad. Gutiérrez se apartó en el 36% de las votaciones con acuerdo en que votó, Lautaro Carmona en el 26% y Guillermo Teillier en el 20%. Alfonso De Urresti, del PS, el diputado de la izquierda con el <span class="var">d2</span> más cercano a la mediana de su bloque, lo hizo en el 13%.</p>
 
-  <p>Comparar Cámaras ayuda a leerlo, porque el mismo diputado cambia de un período a otro. Kast se apartó de la derecha en el 1,3% de las votaciones de 2010-2014, con su <span class="var">d2</span> en el percentil 12 de la sala, y en el 11,1% en 2014-2018, con el percentil 96. Boric pasó del 25,3% en 2014-2018 al 9,9% en 2018-2022, y su <span class="var">d2</span> del percentil 100 al 78. Gutiérrez bajó del 20,5% en 2010-2014 al 9,1% en 2014-2018, con la izquierda en el gobierno, y su <span class="var">d2</span> del percentil 98 al 71. La Cámara actual repite el patrón con el cambio de gobierno. Daniela Serrano, del PC, se apartó de la izquierda en el 6,2% de las votaciones de 2022-2026, con su <span class="var">d2</span> en el percentil 3, y en el 10,5% en lo que va de 2026-2030, con el percentil 93. Chiara Barchiesi, republicana, hizo el camino inverso, del 20,3% y el percentil 87 al 3,1% y el percentil 1. Los botones de la figura llevan a cada uno de esos casos.</p>
+  <p>Comparar Cámaras ayuda a leerlo, porque la volatilidad de un mismo diputado cambia de un período a otro. Kast se apartó de la derecha en el 1,3% de las votaciones de 2010-2014, con su <span class="var">d2</span> en el percentil 12 de la sala, y en el 11,1% en 2014-2018, con el percentil 96. Boric pasó del 25,3% en 2014-2018 al 9,9% en 2018-2022, y su <span class="var">d2</span> del percentil 100 al 78. Gutiérrez bajó del 20,5% en 2010-2014 al 9,1% en 2014-2018, con la izquierda en el gobierno, y su <span class="var">d2</span> del percentil 98 al 71. La Cámara actual repite el patrón con el cambio de gobierno. Daniela Serrano, del PC, se apartó de la izquierda en el 6,2% de las votaciones de 2022-2026, con su <span class="var">d2</span> en el percentil 3, y en el 10,5% en lo que va de 2026-2030, con el percentil 93. Chiara Barchiesi, republicana, hizo el camino inverso, del 20,3% y el percentil 87 al 3,1% y el percentil 1. Los botones de la figura llevan a cada uno de esos casos.</p>
 
-  <p>En 2014-2018 la correlación de la Tabla 2 incluso se invierte (0,20), porque cuatro de los cinco diputados con <span class="var">d2</span> más alto estaban del lado izquierdo, entre −0,79 y −0,97 en W-NOMINATE. Boric era uno de ellos. Es la Cámara de <a href="https://alcatruz.github.io/boric-kast-camara/">Los dos extremos</a>.</p>
+  <p>En 2014-2018 la correlación de la Tabla 2 incluso se invierte (0,20), porque cuatro de los cinco diputados más volátiles estaban del lado izquierdo, entre −0,79 y −0,97 en W-NOMINATE. Boric era uno de ellos. Es la Cámara de <a href="https://alcatruz.github.io/boric-kast-camara/">Los dos extremos</a>.</p>
 
   <h2>Lo que dice y lo que no</h2>
   <p>Dos métodos distintos, con bases armadas por separado, dibujan la misma sala. En la posición, B-Call no agrega nada a lo que ya está publicado. Y eso es una buena noticia, porque la ubicación de los diputados chilenos no depende del método con que se estime.</p>
 
-  <p>Lo que agrega es <span class="var">d2</span>, que muestra cómo se reparten los votos de cada diputado entre los dos bloques. En el centro recoge a quienes votan unas veces con cada uno. En los extremos identifica a quienes votan contra los acuerdos de ambos bloques, como Gutiérrez y los otros diputados del PC en 2010-2014, algo que W-NOMINATE registra como más extremismo.</p>
+  <p>Lo que agrega es <span class="var">d2</span>, la volatilidad del voto de cada diputado respecto de su bloque. En el centro recoge a quienes votan unas veces con cada bloque. En los extremos identifica a quienes votan contra los acuerdos de ambos bloques, como Gutiérrez y los otros diputados del PC en 2010-2014, algo que W-NOMINATE registra como más extremismo. Y sigue a cada diputado de una Cámara a otra, como a Serrano y Barchiesi, cuya volatilidad cambia con el gobierno.</p>
 
   <p>La comparación no dice cuál de los métodos mide mejor la ideología. Los dos usan las mismas votaciones, así que su acuerdo muestra que el resultado resiste un cambio de modelo. Si ese resultado es la ideología de cada diputado es otra pregunta. Tampoco dice nada sobre cambios entre períodos, porque todas las correlaciones son dentro de un mismo período.</p>
 
@@ -260,7 +260,6 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
     <li>Pablo Prieto figura en la base de Fábrega con el identificador 209 también en 2018-2022, donde la Cámara usa el 1064. Lo recodifiqué para incluirlo.</li>
     <li>El lado de un bloque en una votación es la opción, a favor o en contra, que eligió la mayoría de sus miembros. Si empatan, la votación no cuenta. Apartarse del bloque incluye abstenerse.</li>
     <li>Alfonso De Urresti es el diputado de la izquierda, del PS o el PPD, con el <span class="var">d2</span> más cercano a la mediana de su bloque en 2010-2014. Los títulos de los proyectos vienen de tramitacion.senado.cl. Los votos de cada período que usa la Figura 4 están en <code>datos/votos_*.json</code> y los arma <code>R/02_votos.R</code>.</li>
-    <li>Una primera versión de este texto, del 27 de octubre de 2026, leía la correlación entre <span class="var">d2</span> y la cercanía al centro como apoyo al argumento de B-Call. Esa correlación es la que se espera de cómo se calcula <span class="var">d2</span>, y corregí el texto el 28 de octubre.</li>
     <li>El código y los datos están en el <a href="https://github.com/Alcatruz/bcall-wnominate-camara">repositorio</a>. Los archivos que contienen estimaciones de Fábrega (<code>datos/comparacion.csv</code> y <code>datos/datos.js</code>) se distribuyen con su misma licencia, CC BY-NC-SA 4.0.</li>
   </ul>
 
