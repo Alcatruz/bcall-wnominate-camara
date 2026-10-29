@@ -1,6 +1,5 @@
 # =============================================================================
-# 02_votos.R — voto por voto, para la figura en que se elige período y
-# diputado.
+# 02_votos.R — voto por voto, para la figura de los diez casos.
 #
 # Se corre desde la RAÍZ del proyecto bcall_nominate_chile/, después de
 # 01_comparar.R:
@@ -24,9 +23,13 @@
 #   4. Para el panel mensual, cuántas veces votó el diputado cada mes y, por
 #      bloque, la mediana mensual del porcentaje de votos apartados, entre
 #      diputados con al menos 5 votos ese mes.
+#   5. Solo se guardan los diez casos de la Figura 4, cinco diputados en dos
+#      períodos cada uno. Los votos de los demás diputados no se publican.
+#      La mediana mensual del bloque sí usa a todos.
 #
 # ESCRIBE
-#   post_bcall_wnominate/datos/votos_<período>.json   uno por período
+#   outputs/data/post_bcall/votos_casos.rds   un elemento por período, que
+#                                             03_pagina.R mete en datos/datos.js
 # =============================================================================
 
 suppressPackageStartupMessages({
@@ -36,7 +39,16 @@ suppressPackageStartupMessages({
 })
 
 DIR_OUT <- "post_bcall_wnominate/datos"
-PER <- c("2002-2006", "2006-2010", "2010-2014", "2014-2018", "2018-2022", "2022-2026", "2026-2030")
+# los casos de la Figura 4, con el identificador de la Cámara (los mismos de CASOS en index.html)
+CASOS <- tribble(
+  ~periodo,    ~id_parlamentario,
+  "2010-2014", "937",  "2014-2018", "937",    # Gutiérrez
+  "2014-2018", "972",  "2018-2022", "972",    # Boric
+  "2010-2014", "857",  "2014-2018", "857",    # Kast
+  "2022-2026", "1173", "2026-2030", "1173",   # Serrano
+  "2022-2026", "1104", "2026-2030", "1104"    # Barchiesi
+)
+PER <- sort(unique(CASOS$periodo))
 
 cmp <- read_csv(file.path(DIR_OUT, "comparacion.csv"), show_col_types = FALSE,
                 col_types = cols(id_parlamentario = "c")) %>%
@@ -55,6 +67,7 @@ nombre_natural <- function(x) {
   if_else(partes[, 2] == "", x, paste(partes[, 2], partes[, 1]))
 }
 
+votos_casos <- list()
 for (p in PER) {
   dips <- cmp %>% filter(periodo == p)
   v <- votos %>% filter(periodo == p) %>%
@@ -90,7 +103,8 @@ for (p in PER) {
     filter(n >= 5) %>%
     group_by(bloque, mes) %>% summarise(med = round(median(tasa), 4), .groups = "drop")
 
-  lista_dips <- dips %>% left_join(res, by = "id_parlamentario") %>% arrange(nombre_completo)
+  lista_dips <- dips %>% filter(id_parlamentario %in% CASOS$id_parlamentario[CASOS$periodo == p]) %>%
+    left_join(res, by = "id_parlamentario") %>% arrange(nombre_completo)
   salida <- list(
     periodo = p,
     meses = meses,
@@ -117,10 +131,10 @@ for (p in PER) {
            vm = map2(porm$m, porm$n, ~ c(.x, .y)))
     })
   )
-  f <- file.path(DIR_OUT, paste0("votos_", p, ".json"))
-  writeLines(toJSON(salida, auto_unbox = TRUE, na = "null", digits = NA), f, useBytes = TRUE)
-  cat(p, "| votaciones", nrow(vv), "| diputados", nrow(lista_dips), "|", round(file.size(f) / 1024), "KB\n")
+  votos_casos[[p]] <- salida
+  cat(p, "| votaciones", nrow(vv), "| diputados", nrow(lista_dips), "\n")
 }
+write_rds(votos_casos, "outputs/data/post_bcall/votos_casos.rds")
 
 # cifras para el texto
 cat("\n")

@@ -215,7 +215,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
   <h2>Voto por voto</h2>
   <p>Hugo Gutiérrez, del PC, es el caso más claro. En 2010-2014 se apartó de su bloque en el 20,5% de las votaciones, y en el 98% de esos casos la izquierda y la derecha estaban de acuerdo. W-NOMINATE lo deja en −1, el tope de su escala, y <span class="var">d1</span> también lo empuja hacia afuera. Lo que solo <span class="var">d2</span> registra es que su voto es volátil, y que ese borde se arma votando contra acuerdos de toda la sala.</p>
 
-  <p>La Figura 4 permite verlo votación por votación, para cualquier diputado y en cualquiera de las siete Cámaras, incluida la actual. Cada punto gris es una votación de proyecto de ley en que los dos bloques tuvieron una mayoría definida, ubicada según el porcentaje de cada bloque que votó a favor. Arriba a la derecha quedan los acuerdos a favor y abajo a la izquierda los acuerdos en contra. En naranja aparecen las votaciones en que el diputado elegido no votó con su bloque, y abajo, mes a mes, qué parte de sus votos fueron así.</p>
+  <p>La Figura 4 lo muestra votación por votación para cinco diputados, cada uno en dos Cámaras, incluida la actual. Cada punto gris es una votación de proyecto de ley en que los dos bloques tuvieron una mayoría definida, ubicada según el porcentaje de cada bloque que votó a favor. Arriba a la derecha quedan los acuerdos a favor y abajo a la izquierda los acuerdos en contra. En naranja aparecen las votaciones en que el diputado elegido no votó con su bloque, y abajo, mes a mes, qué parte de sus votos fueron así.</p>
 
   <p>Esos puntos naranjos son la volatilidad que mide <span class="var">d2</span>. B-Call la calcula con los votos del propio diputado, como la desviación estándar de sus votos ya estandarizados. Mientras vota con su bloque, sus valores van en la misma dirección. Cada vez que se aparta, el valor cambia de signo, y si se aparta de un acuerdo de toda la sala el valor además es grande, porque queda en una minoría chica. Un diputado volátil, con un <span class="var">d2</span> alto, tiene muchos puntos naranjos, y la figura muestra dónde y cuándo están.</p>
 
@@ -224,10 +224,6 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
 
 <figure class="ancho">
   <div class="grafico">
-    <div class="controles">
-      <label>Período <select id="sel-per"></select></label>
-      <label>Diputado <select id="sel-dip"></select></label>
-    </div>
     <div class="selector" id="sel-casos" role="group" aria-label="Casos para comparar"></div>
     <div id="fig-votos" class="lienzo" role="img" aria-label="Votaciones del período según el porcentaje a favor en cada bloque, con las del diputado elegido que se apartaron de su bloque"></div>
     <div id="fig-meses" class="lienzo" role="img" aria-label="Porcentaje mensual de votos del diputado elegido que se apartaron de su bloque"></div>
@@ -259,7 +255,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
     <li>Para comparar votos, Afirmativo, En Contra y Abstención de las matrices de Fábrega se cruzan con a favor, en contra y abstención. Dispensado, No Vota y las celdas vacías cuentan como sin voto. Los 1.861.669 votos son las celdas de diputado y votación con voto en las dos bases.</li>
     <li>Pablo Prieto figura en la base de Fábrega con el identificador 209 también en 2018-2022, donde la Cámara usa el 1064. Lo recodifiqué para incluirlo.</li>
     <li>El lado de un bloque en una votación es la opción, a favor o en contra, que eligió la mayoría de sus miembros. Si empatan, la votación no cuenta. Apartarse del bloque incluye abstenerse.</li>
-    <li>Alfonso De Urresti es el diputado de la izquierda, del PS o el PPD, con el <span class="var">d2</span> más cercano a la mediana de su bloque en 2010-2014. Los títulos de los proyectos vienen de tramitacion.senado.cl. Los votos de cada período que usa la Figura 4 están en <code>datos/votos_*.json</code> y los arma <code>R/02_votos.R</code>.</li>
+    <li>Alfonso De Urresti es el diputado de la izquierda, del PS o el PPD, con el <span class="var">d2</span> más cercano a la mediana de su bloque en 2010-2014. Los títulos de los proyectos vienen de tramitacion.senado.cl. Los votos de los diez casos de la Figura 4 los arma <code>R/02_votos.R</code>.</li>
     <li>El código está en el <a href="https://github.com/Alcatruz/bcall-wnominate-camara">repositorio</a>. El archivo que contiene estimaciones de Fábrega (<code>datos/datos.js</code>) se distribuye con su misma licencia, CC BY-NC-SA 4.0.</li>
   </ul>
 
@@ -454,7 +450,7 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
   }
 
   // Figura 4, voto por voto ---------------------------------------------------
-  // los votos de cada período se cargan aparte, desde datos/votos_<período>.json
+  // los votos de los diez casos vienen en BW.votos, uno por período
   var VOTOS = {}, est = { p: "2010-2014", id: "937" };
   var CASOS = [
     ["2010-2014", "937", "Gutiérrez 2010-14"], ["2014-2018", "937", "Gutiérrez 2014-18"],
@@ -463,8 +459,6 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
     ["2022-2026", "1173", "Serrano 2022-26"], ["2026-2030", "1173", "Serrano 2026-30"],
     ["2022-2026", "1104", "Barchiesi 2022-26"], ["2026-2030", "1104", "Barchiesi 2026-30"]
   ];
-  var selPer = document.getElementById("sel-per"), selDip = document.getElementById("sel-dip");
-  selPer.innerHTML = PER.map(function (p) { return '<option value="' + p + '">' + p + "</option>"; }).join("");
   function casos() {
     document.getElementById("sel-casos").innerHTML = CASOS.map(function (c) {
       return '<button type="button" data-p="' + c[0] + '" data-id="' + c[1] + '" aria-pressed="' + (c[0] === est.p && c[1] === est.id) + '">' + c[2] + "</button>";
@@ -472,31 +466,23 @@ footer { font-family: var(--sans); font-size: 13px; color: var(--muted); padding
   }
   function cargar(p) {
     if (VOTOS[p]) return Promise.resolve(VOTOS[p]);
-    return fetch("datos/votos_" + p + ".json").then(function (r) { return r.json(); }).then(function (V) {
-      // desplazamiento fijo por votación para que los puntos no se tapen
-      V.jit = V.vot.map(function (v, i) {
-        var s = Math.sin(i * 12.9898) * 43758.5453, r = Math.sin(i * 78.233) * 12345.678;
-        return [(s - Math.floor(s) - 0.5) * 3, (r - Math.floor(r) - 0.5) * 3];
-      });
-      VOTOS[p] = V;
-      return V;
+    var V = window.BW.votos[p];
+    // desplazamiento fijo por votación para que los puntos no se tapen
+    V.jit = V.vot.map(function (v, i) {
+      var s = Math.sin(i * 12.9898) * 43758.5453, r = Math.sin(i * 78.233) * 12345.678;
+      return [(s - Math.floor(s) - 0.5) * 3, (r - Math.floor(r) - 0.5) * 3];
     });
+    VOTOS[p] = V;
+    return Promise.resolve(V);
   }
   function elegir(p, id) {
     cargar(p).then(function (V) {
       est.p = p;
       est.id = V.dips.some(function (d) { return d.id === id; }) ? id : V.dips[0].id;
-      selPer.value = p;
-      selDip.innerHTML = V.dips.map(function (d) {
-        return '<option value="' + d.id + '">' + d.n + " (" + d.pa + ")</option>";
-      }).join("");
-      selDip.value = est.id;
       casos();
       figVotos(tok());
     });
   }
-  selPer.addEventListener("change", function () { elegir(selPer.value, est.id); });
-  selDip.addEventListener("change", function () { elegir(est.p, selDip.value); });
   document.getElementById("sel-casos").addEventListener("click", function (e) {
     var b = e.target.closest("button");
     if (b) elegir(b.getAttribute("data-p"), b.getAttribute("data-id"));

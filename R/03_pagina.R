@@ -1,10 +1,9 @@
 # =============================================================================
-# 03_pagina.R — arma datos/datos.js, lo que lee la página. Los votos de cada
-# período van aparte, en datos/votos_<período>.json (02_votos.R), y la página
-# los carga cuando se elige el período.
+# 03_pagina.R — arma datos/datos.js, lo que lee la página. Los votos de los
+# diez casos de la Figura 4 los prepara 02_votos.R y van en BW.votos.
 #
 # Se corre desde la RAÍZ del proyecto bcall_nominate_chile/, después de
-# 01_comparar.R:
+# 02_votos.R:
 #   Rscript post_bcall_wnominate/R/03_pagina.R
 #
 # ESCRIBE
@@ -41,6 +40,8 @@ pagina <- list(
     mutate(across(c(r_wnom, r_bay, r_dyn, rho_d2_centro), ~ round(.x, 3)),
            across(c(med_contra_bloque, med_contra_acuerdo), ~ round(.x, 4)))
 )
-writeLines(paste0("window.BW = ", toJSON(pagina, dataframe = "rows", na = "null", auto_unbox = TRUE), ";"),
+votos <- read_rds("outputs/data/post_bcall/votos_casos.rds")
+writeLines(paste0("window.BW = ", toJSON(pagina, dataframe = "rows", na = "null", auto_unbox = TRUE), ";\n",
+                  "window.BW.votos = ", toJSON(votos, auto_unbox = TRUE, na = "null", digits = NA), ";"),
            file.path(DIR, "datos.js"), useBytes = TRUE)
 cat("listo |", round(file.size(file.path(DIR, "datos.js")) / 1024), "KB\n")

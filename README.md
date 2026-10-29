@@ -11,11 +11,10 @@ El post está en `index.html` y se publica con GitHub Pages.
 | Ruta | Qué es |
 |---|---|
 | `index.html` | El post, con gráficos interactivos (Plotly) |
-| `datos/datos.js` | Los datos que lee la página |
-| `datos/votos_*.json` | Votación por votación, uno por período, con las votaciones en que cada diputado se apartó de su bloque |
+| `datos/datos.js` | Los datos que lee la página, incluidos los votos de los diez casos de la Figura 4 |
 | `R/00_wnominate_2026.R` | Estima W-NOMINATE para 2026-2030 con la especificación de Fábrega |
 | `R/01_comparar.R` | Cruza las dos bases y calcula las rupturas con el propio bloque |
-| `R/02_votos.R` | Arma los votos de cada período para la Figura 4 (`datos/votos_*.json`) |
+| `R/02_votos.R` | Arma los votos de los diez casos de la Figura 4 |
 | `R/03_pagina.R` | Arma `datos/datos.js` |
 
 ## Datos y decisiones
